@@ -1,0 +1,9 @@
+
+services:
+  e-receipt-react:
+    image: e-receipt-react
+    container_name: e-receipt-react
+    ports:
+      - "5173:5173"
+    env_file:
+      - .env
