@@ -5,7 +5,6 @@ import LoadingSpinner from '@/components/LoadingSpinner.tsx'
 import TransactionTable from '@/feature/home/components/TransactionTable.tsx'
 import TransactionList from '@/feature/home/components/TransactionList.tsx'
 import { TransactionType } from '@/types/TransactionType.ts'
-import TransactionSortBy from '@/feature/home/components/TransactionSortBy.tsx'
 
 interface HomeBodyProps {
   loading: boolean
@@ -19,8 +18,6 @@ interface HomeBodyProps {
 const HomeBody: React.FC<HomeBodyProps> = ({
   loading,
   transactions,
-  sort,
-  setSort,
   handleRowClick,
   handleRefresh,
 }) => {
@@ -48,7 +45,7 @@ const HomeBody: React.FC<HomeBodyProps> = ({
       <div className={'h-[79vh]'}>
         <div className={'mb-1 flex items-center justify-between'}>
           <h2 className="text-medium font-semibold">Today Transactions</h2>
-          <TransactionSortBy sort={sort} onChange={setSort} />
+          {/* <TransactionSortBy sort={sort} onChange={setSort} /> */}
         </div>
         <div className="">{renderContent()}</div>
       </div>

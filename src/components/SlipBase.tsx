@@ -1,4 +1,3 @@
-import React from 'react';
 import { CustomLogo } from '@/components/icons.tsx';
 
 export const htmlStyles = {
