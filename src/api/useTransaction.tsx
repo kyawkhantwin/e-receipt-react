@@ -4,7 +4,7 @@ import useAxiosApi from '@/api/useAxiosApi'
 import { ApiConfig } from '@/config/apiConfig'
 import { HomeData } from '@/types/TransactionType'
 
-export const useTransactions = (limit = 8) => {
+export const useTransactions = (limit = 8, searchTerm = '') => {
   const [page, setPage] = useState(1)
   const [sort, setSort] = useState<string>('desc')
   const [data, setData] = useState<HomeData | null>(null)
@@ -17,7 +17,7 @@ export const useTransactions = (limit = 8) => {
       setLoading(true)
       try {
         const result: HomeData = await trigger({
-          endPoint: ApiConfig.transaction({ page: pageNumber, limit, sort }),
+          endPoint: ApiConfig.transaction({ page: pageNumber, limit, sort, searchTerm }),
           method: 'get',
         })
 
@@ -28,7 +28,7 @@ export const useTransactions = (limit = 8) => {
         setLoading(false)
       }
     },
-    [trigger, limit, sort]
+    [trigger, limit, sort, searchTerm]
   )
 
   useEffect(() => {

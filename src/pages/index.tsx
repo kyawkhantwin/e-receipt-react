@@ -13,7 +13,7 @@ import { ApiConfig } from '@/config/apiConfig.ts'
 import useErrorToasts from '@/components/useErrorToasts.ts'
 
 function LoginPage() {
-  const [username, setUsername] = useState('')
+  const [serial, setSerial] = useState('')
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -63,7 +63,7 @@ function LoginPage() {
       endPoint: ApiConfig.auth,
       method: 'post',
       body: {
-        serial: username,
+        serial: serial,
         pin: password,
       },
     })
@@ -71,30 +71,28 @@ function LoginPage() {
 
   return (
     <DefaultLayout>
-      <div className="flex min-h-[80vh] items-center justify-center bg-gray-50 px-4 sm:px-6 md:px-8">
-        <Card className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl sm:p-8">
+      <div className="flex min-h-[57vh] flex-col items-center justify-center px-4 sm:px-6 md:px-8">
+        <Card className="w-full max-w-md rounded-2xl p-6 sm:p-8">
           <CardHeader className="mb-6 flex justify-center p-0">
-            <h2 className="text-center text-2xl font-bold tracking-wide text-gray-800">Login</h2>
+            <h2 className="text-center text-2xl font-bold tracking-wide">Login</h2>
           </CardHeader>
           <CardBody>
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="w-full">
-                <label className="mb-1 block text-sm font-medium text-gray-700">Username</label>
+                <label className="mb-1 block text-sm font-medium">Serail Number</label>
                 <Input
                   required
-                  className="w-full rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="Enter Username"
-                  value={username}
-                  onChange={e => setUsername(e.target.value)}
+                  className="w-full rounded-lg text-base focus:ring-2 focus:outline-none"
+                  placeholder="Enter Serial number"
+                  value={serial}
+                  onChange={e => setSerial(e.target.value)}
                 />
               </div>
-              <div className="relative w-full">
-                <label className="mb-1 block text-sm font-medium text-gray-700">
-                  Password (6-digit PIN)
-                </label>
+              <div className="relative mt-5 w-full">
+                <label className="mb-1 block text-sm font-medium">Password (6-digit PIN)</label>
                 <Input
                   required
-                  className="w-full rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full rounded-lg text-base focus:ring-2 focus:outline-none"
                   endContent={
                     <button
                       aria-label="toggle password visibility"
@@ -115,7 +113,7 @@ function LoginPage() {
               </div>
               <div>
                 <Button
-                  className="w-full rounded-xl bg-indigo-600 py-3 text-lg font-semibold text-white shadow-md transition-all hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full rounded-xl py-3 text-lg font-semibold shadow-md transition-all focus:ring-2 focus:outline-none"
                   color="primary"
                   type="submit"
                 >
@@ -125,6 +123,10 @@ function LoginPage() {
             </form>
           </CardBody>
         </Card>
+      </div>
+      <div className="mb-10 flex flex-col items-center justify-center gap-3">
+        <img src="/mmqr.png" alt="mmqr" width={50} />
+        <p className="text-bold text-sm">Now with MMQR</p>
       </div>
     </DefaultLayout>
   )

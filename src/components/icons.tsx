@@ -1,12 +1,21 @@
 import * as React from 'react'
 
 import { IconSvgProps } from '@/types'
+import { url } from 'inspector'
 
 export const Logo: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({
   width = 30,
   height,
   ...props
-}) => <img alt="uts logo" height={height ?? width} src="/uts_logo.png" width={width} {...props} />
+}) => (
+  <img
+    alt="kbz logo"
+    height={height ?? width}
+    src={'https://www.kbzbank.com/wp-content/uploads/2018/11/logo1.png'}
+    width={width}
+    {...props}
+  />
+)
 
 export const CustomLogo: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({
   width = 30,

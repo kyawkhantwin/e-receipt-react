@@ -26,16 +26,22 @@ const DetailPage: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <div className="flex flex-col items-center">
-        <div className="flex flex-col items-end justify-center">
-          {transaction.DE3 !== 'ST' && <DetailHeader onSelectionChange={setSelectedTab} />}
-          <DetailBody contentRef={contentRef} selectedTab={selectedTab} transaction={transaction} />
+      <div className="flex h-full min-h-[85vh] w-full flex-col items-center justify-center">
+        <div>
+          <div className="flex flex-col items-end justify-center">
+            {transaction.DE3 !== 'ST' && <DetailHeader onSelectionChange={setSelectedTab} />}
+            <DetailBody
+              contentRef={contentRef}
+              selectedTab={selectedTab}
+              transaction={transaction}
+            />
+          </div>
+          <DetailFooter
+            contentRef={contentRef}
+            selectedTab={selectedTab}
+            transaction={transaction}
+          />
         </div>
-        <DetailFooter
-          contentRef={contentRef}
-          selectedTab={selectedTab}
-          transaction={transaction}
-        />
       </div>
     </DefaultLayout>
   )

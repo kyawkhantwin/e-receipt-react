@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PullToRefresh from 'react-simple-pull-to-refresh'
 
 import LoadingSpinner from '@/components/LoadingSpinner.tsx'
 import TransactionTable from '@/feature/home/components/TransactionTable.tsx'
 import TransactionList from '@/feature/home/components/TransactionList.tsx'
 import { TransactionType } from '@/types/TransactionType.ts'
+import TransactionSortBy from './components/TransactionSortBy'
+import { Input } from '@heroui/input'
 
 interface HomeBodyProps {
   loading: boolean
@@ -13,13 +15,19 @@ interface HomeBodyProps {
   setSort: (sort: string) => void
   handleRowClick: (index: number) => void
   handleRefresh: () => Promise<any>
+  searchTerm: string
+  setSearchTerm: (searchTerm: string) => void
 }
 
 const HomeBody: React.FC<HomeBodyProps> = ({
   loading,
   transactions,
+  sort,
+  setSort,
   handleRowClick,
   handleRefresh,
+  searchTerm,
+  setSearchTerm,
 }) => {
   const renderContent = () => {
     if (loading) return <LoadingSpinner />
@@ -37,17 +45,21 @@ const HomeBody: React.FC<HomeBodyProps> = ({
   }
 
   return (
-    <PullToRefresh
-      className="mb-1 block w-full"
-      pullDownThreshold={60}
-      onRefresh={handleRefresh}
-    >
+    <PullToRefresh className="mb-1 block w-full" pullDownThreshold={60} onRefresh={handleRefresh}>
       <div className={'h-[79vh]'}>
-        <div className={'mb-1 flex items-center justify-between'}>
+        <div className={'mb-1 flex items-center justify-between gap-2'}>
           <h2 className="text-medium font-semibold">Today Transactions</h2>
-          {/* <TransactionSortBy sort={sort} onChange={setSort} /> */}
+          <Input
+            type="search"
+            aria-label="Search"
+            className="w-1/2 px-4"
+            placeholder="Search transaction"
+            value={searchTerm}
+            onValueChange={setSearchTerm}
+          />
+          <TransactionSortBy onChange={setSort} sort={sort} />
         </div>
-        <div className="">{renderContent()}</div>
+        <div className="mt-5">{renderContent()}</div>
       </div>
     </PullToRefresh>
   )

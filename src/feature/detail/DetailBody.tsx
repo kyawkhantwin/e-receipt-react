@@ -13,6 +13,7 @@ interface DetailBodyProps {
 const DetailBody: React.FC<DetailBodyProps> = ({ transaction, selectedTab, contentRef }) => {
   return (
     <div
+      className="mt-4 rounded p-1 shadow-sm"
       style={{
         minHeight: '50vh',
         overflow: 'auto',

@@ -17,7 +17,7 @@ const TransactionList = (props: TransactionListProps) => {
           <Card
             key={index}
             isPressable
-            className="w-full cursor-pointer border border-gray-200 shadow-sm"
+            className="w-full cursor-pointer shadow"
             onPress={() => props.handleRowClick(index)}
           >
             <CardHeader className="flex items-center justify-between text-sm font-semibold text-gray-800">

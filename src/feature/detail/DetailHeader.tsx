@@ -7,13 +7,15 @@ interface DetailHeaderProps {
 
 const DetailHeader: React.FC<DetailHeaderProps> = ({ onSelectionChange }) => {
   return (
-    <Tabs
-      aria-label="Options"
-      onSelectionChange={key => onSelectionChange(key as 'merchant' | 'customer')}
-    >
-      <Tab key="merchant" title="Merchant" />
-      <Tab key="customer" title="Customer" />
-    </Tabs>
+    <div className="flex w-full items-start justify-center">
+      <Tabs
+        aria-label="Options"
+        onSelectionChange={key => onSelectionChange(key as 'merchant' | 'customer')}
+      >
+        <Tab key="merchant" title="Merchant" />
+        <Tab key="customer" title="Customer" />
+      </Tabs>
+    </div>
   )
 }
 
