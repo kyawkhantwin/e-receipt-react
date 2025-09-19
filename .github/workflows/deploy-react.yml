@@ -61,7 +61,7 @@ jobs:
           script: |
             cd ~/e_receipt/react
             # Replace image placeholders in docker-compose.yml with actual values
-            sed -i "s|image: \${IMAGE_NAME}:\${IMAGE_VERSION}|image: ${{ secrets.IMAGE_NAME }}:${{ secrets.IMAGE_VERSION }}|g" docker-compose.yml
+            sed -i "s|image: \${IMAGE_NAME}:\${IMAGE_VERSION}|image: ${{ secrets.IMAGE_NAME }}:v1.0.0|g" docker-compose.yml
             # Save the full image name into a file for debugging
             echo "${{ secrets.IMAGE_NAME }}:${{ secrets.IMAGE_VERSION }}" > image_name.txt
             echo "Saved image name: $(cat image_name.txt)"
