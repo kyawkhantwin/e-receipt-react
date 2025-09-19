@@ -1,9 +1,7 @@
 name: Build and Deploy React App
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch: # manual trigger
 
 jobs:
   build_and_push:
@@ -27,8 +25,20 @@ jobs:
           docker build -t $IMAGE_NAME:$IMAGE_VERSION .
           docker push $IMAGE_NAME:$IMAGE_VERSION
 
-  deploy:
+  copy_compose_file:
     needs: build_and_push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/scp-action@v0.1.2
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: 'docker-compose.yaml' # your top-level file
+          target: '~/e_receipt/react' # remote path
+
+  deploy:
+    needs: copy_compose_file
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
@@ -39,12 +49,8 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-          source: "docker-compose.yaml"
-          target: "~/e_receipt/react"
           script: |
             export IMAGE_NAME=$IMAGE_NAME
             export IMAGE_VERSION=$IMAGE_VERSION
             cd ~/e_receipt/react
             docker compose pull
-            
