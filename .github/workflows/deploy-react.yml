@@ -23,18 +23,25 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build and push image
+      - name: Build Docker image
         run: |
           docker build -t $IMAGE_NAME:$IMAGE_VERSION .
+      
+      - name: Save Docker image as tar
+        run: |
+          docker save $IMAGE_NAME:$IMAGE_VERSION -o react-app.tar
+          
+      - name: Push Docker image to registry
+        run: |
           docker push $IMAGE_NAME:$IMAGE_VERSION
 
-  copy_compose_file:
+  copy_files_to_server:
     needs: build_and_push
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: List files in workspace
+      - name: List files
         run: ls -l
 
       - uses: appleboy/scp-action@v0.1.7
@@ -43,11 +50,13 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-          source: 'docker-compose.yml'
+          source: |
+            docker-compose.yml
+            react-app.tar
           target: '~/e_receipt/react'
 
   deploy:
-    needs: copy_compose_file
+    needs: copy_files_to_server
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
@@ -63,5 +72,11 @@ jobs:
             export IMAGE_NAME=$IMAGE_NAME
             export IMAGE_VERSION=$IMAGE_VERSION
             cd ~/e_receipt/react
+            # Load local image if available
+            if [ -f react-app.tar ]; then
+              docker load -i react-app.tar
+            fi
+            # Pull from registry to make sure latest image is used
             docker compose pull
-            docker compose up -d --remove-orphans
+            # Start or update services
+            # docker compose up -d --remove-orphans
