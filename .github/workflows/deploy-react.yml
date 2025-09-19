@@ -1,35 +1,72 @@
-deploy:
-  needs: copy_compose_file
-  runs-on: ubuntu-latest
-  env:
-    IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
-    IMAGE_VERSION: v1.0.0
-  steps:
-    - uses: appleboy/ssh-action@v0.1.7
-      with:
-        host: ${{ secrets.SERVER_IP }}
-        username: ${{ secrets.SERVER_USER }}
-        key: ${{ secrets.SERVER_SSH_KEY }}
-        passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-        script: |
-          export IMAGE_NAME=$IMAGE_NAME
-          export IMAGE_VERSION=$IMAGE_VERSION
-          cd ~/e_receipt/react
+name: Build and Deploy React App
 
-          # Save the full image name into a file for debugging
-          echo "$IMAGE_NAME:$IMAGE_VERSION" > image_name.txt
-          echo "Saved image name: $(cat image_name.txt)"
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # manual trigger
 
-          # Optional: check if file content is correct
-          cat image_name.txt
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+      IMAGE_VERSION: v1.0.0
+    steps:
+      - uses: actions/checkout@v4
 
-          # Load local image if available
-          if [ -f react-app.tar ]; then
-            docker load -i react-app.tar
-          fi
+      - uses: docker/setup-buildx-action@v2
 
-          # Pull the image from the registry
-          docker pull "$IMAGE_NAME:$IMAGE_VERSION"
+      - uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.REGISTRY_URL }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
 
-          # Run containers
-          # docker compose up -d --remove-orphans
+      - name: Build and push image
+        run: |
+          docker build -t $IMAGE_NAME:$IMAGE_VERSION .
+          docker push $IMAGE_NAME:$IMAGE_VERSION
+
+  copy_compose_file:
+    needs: build_and_push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+          source: 'docker-compose.yml'
+          target: '~/e_receipt/react'
+
+  deploy:
+    needs: copy_compose_file
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+      IMAGE_VERSION: v1.0.0
+    steps:
+      - uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+          script: |
+            export IMAGE_NAME=$IMAGE_NAME
+            export IMAGE_VERSION=$IMAGE_VERSION
+            cd ~/e_receipt/react
+
+            # Save the full image name into a file for debugging
+            echo "$IMAGE_NAME:$IMAGE_VERSION" > image_name.txt
+            echo "Saved image name: $(cat image_name.txt)"
+
+            # Optional: check if file content is correct
+            cat image_name.txt
+
+            docker compose pull
+            # docker compose up -d --remove-orphans
