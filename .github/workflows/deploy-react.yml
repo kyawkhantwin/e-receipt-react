@@ -7,7 +7,21 @@ on:
   workflow_dispatch: # manual trigger
 
 jobs:
+  debug_image_name:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+      IMAGE_VERSION: v1.0.0
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Debug Image Name
+        run: |
+          echo "IMAGE_NAME='${IMAGE_NAME}'"
+          echo "IMAGE_VERSION='${IMAGE_VERSION}'"
+
   build_and_push:
+    needs: debug_image_name
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
@@ -69,4 +83,4 @@ jobs:
             cat image_name.txt
 
             docker compose pull
-            # docker compose up -d --remove-orphans
+            docker compose up -d --remove-orphans
