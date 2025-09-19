@@ -45,7 +45,7 @@ const HomePage: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <div className="mt-4 lg:flex lg:items-center lg:justify-center">
+      <div className="mx-4 lg:flex lg:items-center lg:justify-center">
         <div className="lg:container">
           <HomeBody
             handleRefresh={handleRefresh}

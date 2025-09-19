@@ -11,10 +11,10 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
         <Link
           isExternal
           className="flex items-center gap-1 text-current"
-          href="https://www.kbzbank.com/en/"
+          // href="https://www.kbzbank.com/en/"
           title="heroui.com homepage"
         >
-          <p className="text-primary"> KBZ Bank</p>
+          <p className="text-primary"> UTS </p>
         </Link>
       </footer>
     </div>

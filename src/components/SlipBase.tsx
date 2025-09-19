@@ -121,7 +121,7 @@ export const SlipHeader = ({
 }) => (
   <>
     <div style={htmlStyles.logo}>
-      <CustomLogo src="/kbz_logo_horizonal.png" width={60} />
+      <CustomLogo  width={40} />
     </div>
     <div style={htmlStyles.merchantName}>{merchantName}</div>
     <div style={htmlStyles.merchantAddress}>{merchantAddress}</div>
