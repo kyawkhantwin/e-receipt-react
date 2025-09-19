@@ -32,14 +32,19 @@ jobs:
     needs: build_and_push
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
+      - name: List files in workspace
+        run: ls -l
+
       - uses: appleboy/scp-action@v0.1.2
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-          source: 'docker-compose.yaml' # your top-level file
-          target: '~/e_receipt/react' # remote path
+          source: 'docker-compose.yml'
+          target: '~/e_receipt/react'
 
   deploy:
     needs: copy_compose_file
@@ -59,3 +64,4 @@ jobs:
             export IMAGE_VERSION=$IMAGE_VERSION
             cd ~/e_receipt/react
             docker compose pull
+            docker compose up -d --remove-orphans
