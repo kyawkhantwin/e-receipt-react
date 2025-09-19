@@ -47,17 +47,21 @@ jobs:
           target: '~/e_receipt/react'
 
   deploy:
-  needs: copy_compose_file
-  runs-on: ubuntu-latest
-  steps:
-    - uses: appleboy/ssh-action@v0.1.7
-      with:
-        host: ${{ secrets.SERVER_IP }}
-        username: ${{ secrets.SERVER_USER }}
-        key: ${{ secrets.SERVER_SSH_KEY }}
-        passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-        script: |
-          IMAGE_NAME=${{ secrets.IMAGE_NAME }}
-          IMAGE_VERSION=v1.0.0
-          cd ~/e_receipt/react
-          docker compose pull $IMAGE_NAME:$IMAGE_VERSION
+    needs: copy_compose_file
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+      IMAGE_VERSION: v1.0.0
+    steps:
+      - uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+          script: |
+            export IMAGE_NAME=$IMAGE_NAME
+            export IMAGE_VERSION=$IMAGE_VERSION
+            cd ~/e_receipt/react
+            docker compose pull
+            docker compose up -d --remove-orphans
