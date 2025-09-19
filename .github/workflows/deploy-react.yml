@@ -19,6 +19,9 @@ jobs:
         run: |
           echo "IMAGE_NAME='${IMAGE_NAME}'"
           echo "IMAGE_VERSION='${IMAGE_VERSION}'"
+          echo "${IMAGE_NAME}:${IMAGE_VERSION}" > image_name.txt
+          echo "Saved image name: $(cat image_name.txt)"
+          ls -l image_name.txt
 
   build_and_push:
     needs: debug_image_name
