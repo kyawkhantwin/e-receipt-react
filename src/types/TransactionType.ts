@@ -52,6 +52,7 @@ export type paginationData = {
   totalItems: number
   page: number
   limit: number
+  searchTerm?: string
 }
 
 export const entryModeMap: Record<string, string> = {

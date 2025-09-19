@@ -17,7 +17,7 @@ export const useTransactions = (limit = 8, searchTerm = '') => {
       setLoading(true)
       try {
         const result: HomeData = await trigger({
-          endPoint: ApiConfig.transaction({ page: pageNumber, limit, sort, searchTerm }),
+          endPoint: ApiConfig.transaction({ page: pageNumber, limit, sort }),
           method: 'get',
         })
 

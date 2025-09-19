@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { IconSvgProps } from '@/types'
-import { url } from 'inspector'
+// import { url } from 'inspector'
 
 export const Logo: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({
   width = 30,

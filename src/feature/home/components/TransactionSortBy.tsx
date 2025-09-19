@@ -1,5 +1,5 @@
 import React from 'react'
-import { Select, SelectSection, SelectItem } from '@heroui/select'
+import { Select, SelectItem } from '@heroui/select'
 const sortOptions = [
   { key: 'desc', label: 'Newest' },
   { key: 'asc', label: 'Oldest' },
