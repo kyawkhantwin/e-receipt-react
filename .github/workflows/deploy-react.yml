@@ -28,10 +28,7 @@ jobs:
           docker build -t $IMAGE_NAME:$IMAGE_VERSION .
           docker push $IMAGE_NAME:$IMAGE_VERSION
 
-
-
   deploy:
-    needs: copy_compose_file
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
