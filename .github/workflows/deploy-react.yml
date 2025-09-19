@@ -33,6 +33,7 @@ jobs:
     needs: build_and_push
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_IP }}
@@ -55,13 +56,11 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           passphrase: ${{ secrets.SSH_KEY_PASSPHRASE}}
           script: |
-            export IMAGE_NAME=$IMAGE_NAME
-            export IMAGE_VERSION=$IMAGE_VERSION
             cd ~/e_receipt/react
             # Replace image placeholders in docker-compose.yml with actual values
-            sed -i "s|image: ${IMAGE_NAME}:${IMAGE_VERSION}|image: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}|g" docker-compose.yml
+            sed -i "s|image: \${IMAGE_NAME}:\${IMAGE_VERSION}|image: ${{ secrets.IMAGE_NAME }}:${{ secrets.IMAGE_VERSION }}|g" docker-compose.yml
             # Save the full image name into a file for debugging
-            echo "${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}" > image_name.txt
+            echo "${{ secrets.IMAGE_NAME }}:${{ secrets.IMAGE_VERSION }}" > image_name.txt
             echo "Saved image name: $(cat image_name.txt)"
 
             # Optional: check if file content is correct
