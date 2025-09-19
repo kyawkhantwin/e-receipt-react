@@ -1,6 +1,9 @@
 name: Build and Deploy React App
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch: # manual trigger
 
 jobs:
@@ -34,6 +37,7 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
           source: 'docker-compose.yaml' # your top-level file
           target: '~/e_receipt/react' # remote path
 
@@ -49,6 +53,7 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
           script: |
             export IMAGE_NAME=$IMAGE_NAME
             export IMAGE_VERSION=$IMAGE_VERSION
