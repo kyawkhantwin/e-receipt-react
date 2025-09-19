@@ -38,7 +38,7 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: 'docker-compose.yaml' # your top-level file
+          source: 'docker-compose.yml' # your top-level file
           target: '~/e_receipt/react' # remote path
 
   deploy:
