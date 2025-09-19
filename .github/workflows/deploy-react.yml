@@ -64,4 +64,3 @@ jobs:
             export IMAGE_VERSION=$IMAGE_VERSION
             cd ~/e_receipt/react
             docker compose pull
-            docker compose up -d --remove-orphans
