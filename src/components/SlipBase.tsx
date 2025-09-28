@@ -1,4 +1,4 @@
-import { CustomLogo } from '@/components/icons.tsx'
+import { Logo } from '@/components/icons.tsx'
 
 export const htmlStyles = {
   page: {
@@ -121,7 +121,7 @@ export const SlipHeader = ({
 }) => (
   <>
     <div style={htmlStyles.logo}>
-      <CustomLogo  width={40} />
+      <Logo width={40} />
     </div>
     <div style={htmlStyles.merchantName}>{merchantName}</div>
     <div style={htmlStyles.merchantAddress}>{merchantAddress}</div>

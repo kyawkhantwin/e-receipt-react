@@ -7,6 +7,7 @@ export function parseDE7ToDateTime(de7: string): {
 } {
   const padded = (n: number) => n.toString().padStart(2, '0')
   const now = new Date()
+  console.log('now', now)
   const year = now.getFullYear()
 
   if (!de7 || de7.length !== 10) {
