@@ -22,7 +22,6 @@ jobs:
           registry: ${{ secrets.REGISTRY_URL }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE}}
 
       - name: Build and push image
         run: |
@@ -42,9 +41,9 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           passphrase: ${{ secrets.SSH_KEY_PASSPHRASE}}
-          source: 'docker-compose.yml' 
-          target: '~/e_receipt/react' 
-          
+          source: 'docker-compose.yml'
+          target: '~/e_receipt/react'
+
   deploy:
     needs: copy_compose_file
     runs-on: ubuntu-latest
