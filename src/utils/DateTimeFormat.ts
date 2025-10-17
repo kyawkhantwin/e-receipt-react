@@ -47,7 +47,7 @@ export function parseDE7ToDateTime(de7: string): {
   }
 
   const parsedDate = new Date(
-    `${year}-${padded(MM)}-${padded(DD)}T${padded(hh)}:${padded(mm)}:${padded(ss)}Z`
+    `${year}-${padded(MM)}-${padded(DD)}T${padded(hh)}:${padded(mm)}:${padded(ss)}`
   )
   const date = `${year}-${padded(MM)}-${padded(DD)}`
   const time = `${padded(hh)}:${padded(mm)}:${padded(ss)}`
