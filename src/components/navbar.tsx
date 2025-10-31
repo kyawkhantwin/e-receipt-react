@@ -32,7 +32,7 @@ export const Navbar = () => {
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand className="w-32 gap-3">
           <Link className="flex justify-start gap-1" color="foreground" href={routeTo}>
-            <Logo width={140} height={200} />
+            <Logo />
           </Link>
         </NavbarBrand>
       </NavbarContent>
