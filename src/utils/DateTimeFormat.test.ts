@@ -47,7 +47,7 @@ describe('parseDE7ToDateTime', () => {
   })
 
   test('handles invalid day (February 30)', () => {
-    const result = parseDE7ToDateTime('0230000000') // DD=30
+    parseDE7ToDateTime('0230000000') // DD=30
     expect(console.warn).toHaveBeenCalled()
   })
 

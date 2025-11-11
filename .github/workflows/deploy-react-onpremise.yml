@@ -1,0 +1,93 @@
+name: Build and Deploy e-receipt-react Frontend on-premise
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    outputs:
+      IMAGE_VERSION: ${{ steps.set_version.outputs.version }}
+    env:
+      IMAGE_NAME: ${{ secrets.FRONTEND_IMAGE_NAME }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set IMAGE_VERSION from package.json
+        id: set_version
+        run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
+
+      - uses: docker/setup-buildx-action@v2
+
+      - uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.REGISTRY_URL }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build and push React frontend image
+        run: |
+          echo "Building and pushing Docker image $IMAGE_NAME:${{ steps.set_version.outputs.version }}"
+          docker buildx build --push -t "$IMAGE_NAME:${{ steps.set_version.outputs.version }}" -f Dockerfile .
+
+  copy_compose_file:
+    needs: build_and_push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: List files in root
+        run: ls -la
+      - name: Check if docker-compose.yml exists
+        run: |
+          if [ -f "docker-compose.yml" ]; then
+            echo "docker-compose.yml found"
+            cat docker-compose.yml
+          else
+            echo "docker-compose.yml not found - this shouldn't happen"
+            exit 1
+          fi
+      - uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          port: ${{ secrets.SERVER_SSH_PORT }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+          source: 'docker-compose.yml'
+          target: '~/e_receipt/react'
+
+  deploy:
+    needs: [build_and_push, copy_compose_file]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v0.1.7
+        env:
+          IMAGE_NAME: ${{ secrets.FRONTEND_IMAGE_NAME }}
+          IMAGE_VERSION: ${{ needs.build_and_push.outputs.IMAGE_VERSION }}
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          port: ${{ secrets.SERVER_SSH_PORT }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+          envs: IMAGE_NAME,IMAGE_VERSION
+          script: |
+            cd ~/e_receipt/react
+            echo "Current directory: $(pwd)"
+            echo "Files in directory:"
+            ls -la
+
+            echo "IMAGE_NAME from GitHub: $IMAGE_NAME"
+            echo "IMAGE_VERSION from package.json: $IMAGE_VERSION"
+
+            sed -i "s|image:.*|image: ${IMAGE_NAME}:${IMAGE_VERSION}|g" docker-compose.yml
+
+            echo "Updated docker-compose.yml:"
+            cat docker-compose.yml
+
+            docker compose pull
+            docker compose up -d
