@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PullToRefresh from 'react-simple-pull-to-refresh'
 
 import LoadingSpinner from '@/components/LoadingSpinner.tsx'

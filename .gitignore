@@ -22,7 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
+e-receipt-ip.tar
+e-receipt-ip.zip
 
 pnpm-lock.yaml
 yarn.lock

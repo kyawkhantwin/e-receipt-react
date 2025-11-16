@@ -9,12 +9,15 @@ import DefaultLayout from '@/layouts/default.tsx'
 import { setTransaction } from '@/redux/transactionSlice.ts'
 import { useTransactions } from '@/api/useTransaction.tsx'
 import { useScreenSize } from '@/hooks/useScreenSize.ts'
+import { useAuthToken } from '@/utils/useAuthToken.tsx'
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const screenSize = useScreenSize()
   const [searchTerm, setSearchTerm] = useState<string>('')
+  const { getAuthData } = useAuthToken()
+  const {serial} = getAuthData()
 
   const [limit, setLimit] = useState(8)
 
@@ -32,7 +35,7 @@ const HomePage: React.FC = () => {
     setSort,
     setPage,
     handleRefresh,
-  } = useTransactions(limit, searchTerm)
+  } = useTransactions(limit, searchTerm,serial!)
 
   const handleRowClick = useCallback(
     (index: number) => {
@@ -45,7 +48,7 @@ const HomePage: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <div className="mt-4 lg:flex lg:items-center lg:justify-center">
+      <div className="mx-4 lg:flex lg:items-center lg:justify-center">
         <div className="lg:container">
           <HomeBody
             handleRefresh={handleRefresh}

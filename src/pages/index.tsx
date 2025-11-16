@@ -13,7 +13,7 @@ import { ApiConfig } from '@/config/apiConfig.ts'
 import useErrorToasts from '@/components/useErrorToasts.ts'
 
 function LoginPage() {
-  const [serial, setSerial] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -32,7 +32,7 @@ function LoginPage() {
 
   useEffect(() => {
     if (isSuccess) {
-      addToken(data?.token, data?.merchantName, data?.merchantAddress)
+      addToken(data?.token, data?.merchant_name, data?.merchant_address,data?.serial)
 
       addToast({
         title: 'Login Successful',
@@ -42,7 +42,8 @@ function LoginPage() {
     }
   }, [isSuccess, data])
 
-  const isValidPin = (value: string) => /^\d{6}$/.test(value)
+ const isValidPin = (value: string) => /^.{6,}$/.test(value)
+
 
   const handlePasswordChange = (value: string) => {
     setPassword(value)
@@ -54,7 +55,7 @@ function LoginPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!isValidPin(password)) {
-      setPasswordError('Password must be a 6-digit.')
+      setPasswordError('Password must be at least 6 character')
 
       return
     }
@@ -63,8 +64,8 @@ function LoginPage() {
       endPoint: ApiConfig.auth,
       method: 'post',
       body: {
-        serial: serial,
-        pin: password,
+        username: username,
+        password: password,
       },
     })
   }
@@ -79,17 +80,17 @@ function LoginPage() {
           <CardBody>
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">Serail Number</label>
+                <label className="mb-1 block text-sm font-medium">Username</label>
                 <Input
                   required
                   className="w-full rounded-lg text-base focus:ring-2 focus:outline-none"
                   placeholder="Enter Serial number"
-                  value={serial}
-                  onChange={e => setSerial(e.target.value)}
+                  value={username}
+                  onChange={e => setUsername(e.target.value)}
                 />
               </div>
               <div className="relative mt-5 w-full">
-                <label className="mb-1 block text-sm font-medium">Password (6-digit PIN)</label>
+                <label className="mb-1 block text-sm font-medium">Password</label>
                 <Input
                   required
                   className="w-full rounded-lg text-base focus:ring-2 focus:outline-none"

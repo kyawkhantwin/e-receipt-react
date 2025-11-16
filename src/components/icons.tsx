@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { IconSvgProps } from '@/types'
-import { url } from 'inspector'
+// import { url } from 'inspector'
 
 export const Logo: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({
   width = 30,
@@ -13,7 +13,8 @@ export const Logo: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({
 
     alt="uts logo"
     height={height ?? width}
-    src={'/logo_uts.png'}
+    // src={'https://www.kbzbank.com/wp-content/uploads/2018/11/logo1.png'}
+    src={'/uts_logo.png'}
     width={width}
   />
 )

@@ -9,6 +9,8 @@ export function parseDE7ToDateTime(de7: string): {
   const now = new Date()
   const year = now.getFullYear()
 
+  const daysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate()
+
   if (!de7 || de7.length !== 10) {
     return {
       date: `${year}-${padded(now.getMonth() + 1)}-${padded(now.getDate())}`,
@@ -27,7 +29,7 @@ export function parseDE7ToDateTime(de7: string): {
     MM >= 1 &&
     MM <= 12 &&
     DD >= 1 &&
-    DD <= 31 &&
+    DD <= daysInMonth(MM, year) &&
     hh >= 0 &&
     hh <= 23 &&
     mm >= 0 &&
@@ -46,7 +48,7 @@ export function parseDE7ToDateTime(de7: string): {
   }
 
   const parsedDate = new Date(
-    `${year}-${padded(MM)}-${padded(DD)}T${padded(hh)}:${padded(mm)}:${padded(ss)}Z`
+    `${year}-${padded(MM)}-${padded(DD)}T${padded(hh)}:${padded(mm)}:${padded(ss)}`
   )
   const date = `${year}-${padded(MM)}-${padded(DD)}`
   const time = `${padded(hh)}:${padded(mm)}:${padded(ss)}`
