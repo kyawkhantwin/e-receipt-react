@@ -5,7 +5,6 @@ import PosTerminalIcon from '@/components/icons/PosTerminalIcon'
 import useMerchantTerminals from '@/hooks/useMerchantTerminals'
 import { TerminalData } from '@/types/TerminalTypes'
 import { useAuthToken } from '@/utils/useAuthToken'
-import { Button } from '@heroui/button'
 
 const ListItem: React.FC<TerminalData> = props => {
   const { getAuthData } = useAuthToken()
