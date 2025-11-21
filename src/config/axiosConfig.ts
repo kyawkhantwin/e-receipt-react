@@ -9,9 +9,10 @@ axiosClient.interceptors.request.use(
   function (config) {
     const token = localStorage.getItem('token')
     config.headers['x-api-key'] = import.meta.env.VITE_API_KEY
+
+    console.log(token, import.meta.env.VITE_API_KEY)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
-
     }
 
     return config

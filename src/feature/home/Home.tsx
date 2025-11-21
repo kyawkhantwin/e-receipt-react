@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import HomeFooter from './HomeFooter.tsx'
@@ -17,7 +17,10 @@ const HomePage: React.FC = () => {
   const screenSize = useScreenSize()
   const [searchTerm, setSearchTerm] = useState<string>('')
   const { getAuthData } = useAuthToken()
-  const {serial} = getAuthData()
+  const { serial: authSerial } = getAuthData()
+  const location = useLocation()
+  const stateSerial = location.state?.serial
+  const serial = stateSerial || authSerial
 
   const [limit, setLimit] = useState(8)
 
@@ -35,7 +38,7 @@ const HomePage: React.FC = () => {
     setSort,
     setPage,
     handleRefresh,
-  } = useTransactions(limit, searchTerm,serial!)
+  } = useTransactions(limit, searchTerm, serial)
 
   const handleRowClick = useCallback(
     (index: number) => {

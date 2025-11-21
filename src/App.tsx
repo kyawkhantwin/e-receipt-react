@@ -5,10 +5,13 @@ import HomePage from '@/feature/home/Home.tsx'
 import DetailPage from '@/feature/detail/Detail.tsx'
 import AuthRoute from '@/routes/AuthRoutes.tsx'
 import ProtectedRoute from '@/routes/ProtectedRoute.tsx'
+import ListPage from './feature/list/list'
 
 function App() {
   return (
     <Routes>
+      <Route element={<ListPage />} path="/list" />
+
       <Route element={<AuthRoute />}>
         <Route element={<IndexPage />} path="/" />
       </Route>

@@ -20,7 +20,6 @@ function LoginPage() {
   const { showErrorToasts } = useErrorToasts()
   const { trigger, isSuccess, isError, data, errorData } = useAxiosApi()
   const toggleVisibility = () => setShowPassword(!showPassword)
-
   const { addToken } = useAuthToken()
   const navigate = useNavigate()
 
@@ -32,18 +31,32 @@ function LoginPage() {
 
   useEffect(() => {
     if (isSuccess) {
-      addToken(data?.token, data?.merchant_name, data?.merchant_address,data?.serial)
+      addToken({
+        token: data?.token,
+        merchantName: data?.merchant_name,
+        merchantAddress: data?.merchant_address,
+        serial: data?.serial,
+        role: data?.role,
+        merchantId: data?.merchant_id,
+        appId: data?.app_id,
+        receiptOn: data?.receipt_on,
+        userId: data?.user_id,
+      })
+      console.log('response data', data)
 
       addToast({
         title: 'Login Successful',
         color: 'success',
       })
-      navigate('/home')
+      if (data?.role === 'merchant') {
+        navigate(`/list?merchantId=${data?.merchant_id}`)
+      } else {
+        navigate('/home')
+      }
     }
   }, [isSuccess, data])
 
- const isValidPin = (value: string) => /^.{6,}$/.test(value)
-
+  const isValidPin = (value: string) => /^.{6,}$/.test(value)
 
   const handlePasswordChange = (value: string) => {
     setPassword(value)
