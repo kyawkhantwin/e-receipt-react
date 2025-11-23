@@ -5,7 +5,6 @@ import DetailHeader from './DetailHeader'
 import DetailBody from './DetailBody'
 import DetailFooter from './DetailFooter'
 
-import DefaultLayout from '@/layouts/default.tsx'
 import { useAppSelector } from '@/redux/store.ts'
 
 const DetailPage: React.FC = () => {

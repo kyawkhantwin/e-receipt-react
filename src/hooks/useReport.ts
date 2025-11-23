@@ -6,7 +6,7 @@ interface UseReportResult {
   report: CashierReportResponse | MerchantReportResponse | null
   loading: boolean
   error: any
-  fetchReport: (params?: { serial?: string; merchantId?: string }) => Promise<void>
+  fetchReport: (params: { serial?: string; merchantId: string }) => Promise<void>
 }
 
 const useReport = (): UseReportResult => {
@@ -14,7 +14,7 @@ const useReport = (): UseReportResult => {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<any>(null)
 
-  const fetchReport = useCallback(async (params?: { serial?: string; merchantId?: string }) => {
+  const fetchReport = useCallback(async (params: { serial?: string; merchantId: string }) => {
     setLoading(true)
     setError(null)
     try {

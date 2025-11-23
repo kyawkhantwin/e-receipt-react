@@ -118,7 +118,7 @@ function ReportPage() {
                   dataKey="value"
                   label
                 >
-                  {reportData?.data?.report.map((entry: any, index: number) => (
+                  {reportData?.data?.report.map((_entry: any, index: number) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={['#0088FE', '#00C49F', '#FFBB28', '#FF8042'][index % 4]}
