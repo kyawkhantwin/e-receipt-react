@@ -1,28 +1,45 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 export const useScreenSize = () => {
-  const [screenSize, setScreenSize] = useState<'sm' | 'md' | 'lg' | 'xl' | '2xl' | ''>('');
+  const getScreenSize = () => {
+    if (window.innerWidth < 768) {
+      return 'sm'
+    } else if (window.innerWidth >= 768 && window.innerWidth < 1024) {
+      return 'md'
+    } else if (window.innerWidth >= 1024 && window.innerWidth < 1280) {
+      return 'lg'
+    } else if (window.innerWidth >= 1280 && window.innerWidth < 1536) {
+      return 'xl'
+    } else if (window.innerWidth >= 1536) {
+      return '2xl'
+    }
+    return ''
+  }
+
+  const [screenSize, setScreenSize] = useState<'sm' | 'md' | 'lg' | 'xl' | '2xl' | ''>(
+    getScreenSize()
+  )
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        setScreenSize('sm');
+        setScreenSize('sm')
       } else if (window.innerWidth >= 768 && window.innerWidth < 1024) {
-        setScreenSize('md');
+        setScreenSize('md')
       } else if (window.innerWidth >= 1024 && window.innerWidth < 1280) {
-        setScreenSize('lg');
+        setScreenSize('lg')
       } else if (window.innerWidth >= 1280 && window.innerWidth < 1536) {
-        setScreenSize('xl');
+        setScreenSize('xl')
       } else if (window.innerWidth >= 1536) {
-        setScreenSize('2xl');
+        setScreenSize('2xl')
       }
-    };
+    }
 
-    window.addEventListener('resize', handleResize);
-    handleResize();
+    window.addEventListener('resize', handleResize)
+    handleResize()
 
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
-  return screenSize;
-};
+  return screenSize
+}

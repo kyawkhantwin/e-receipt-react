@@ -42,14 +42,13 @@ function LoginPage() {
         receiptOn: data?.receipt_on,
         userId: data?.user_id,
       })
-      console.log('response data', data)
 
       addToast({
         title: 'Login Successful',
         color: 'success',
       })
       if (data?.role === 'merchant') {
-        navigate(`/list?merchantId=${data?.merchant_id}`)
+        navigate(`/report`)
       } else {
         navigate('/home')
       }

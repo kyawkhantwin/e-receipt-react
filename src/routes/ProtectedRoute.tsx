@@ -4,6 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { addToast } from '@heroui/toast'
 
 import { useAuthToken } from '@/utils/useAuthToken'
+import DefaultLayout from '@/layouts/default'
 
 const ProtectedRoute = () => {
   const { hasToken } = useAuthToken()
@@ -24,7 +25,11 @@ const ProtectedRoute = () => {
     return <Navigate replace to="/" />
   }
 
-  return <Outlet />
+  return (
+    <DefaultLayout>
+      <Outlet />
+    </DefaultLayout>
+  )
 }
 
 export default ProtectedRoute
