@@ -14,6 +14,7 @@ export const getMerchantTerminals = async (
 export const getReport = async (params: {
   serial?: string
   merchantId: string
+  range?: string
 }): Promise<CashierReportResponse | MerchantReportResponse> => {
   const response = await axiosClient.get(ApiConfig.report, { params })
   return response.data

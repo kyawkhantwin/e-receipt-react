@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { getReport } from '../../api/reportService'
 import { useAuthToken } from '@/utils/useAuthToken'
 import { Card, CardBody, CardHeader } from '@heroui/card'
+import LoadingSpinner from '@/components/LoadingSpinner.tsx'
+import { addToast } from '@heroui/toast'
 import {
   BarChart,
   Bar,
@@ -15,11 +17,12 @@ import {
   Pie,
   Cell,
 } from 'recharts'
+import { Select, SelectItem } from '@heroui/select'
 
 function ReportPage() {
-  const [reportData, setReportData] = useState<any>(null)
+  const [reportData, setReportData] = useState<any>([])
   const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string | null>(null)
+  const [selectedTimeframe, setSelectedTimeframe] = useState<string>('1d')
   const { getAuthData } = useAuthToken()
   const { merchantId } = getAuthData()
 
@@ -27,29 +30,47 @@ function ReportPage() {
     const fetchReport = async () => {
       try {
         setLoading(true)
-        const data = await getReport({ merchantId: merchantId! })
+        const data = await getReport({ merchantId: merchantId!, range: selectedTimeframe })
         setReportData(data)
       } catch (err: any) {
-        setError(err.message || 'Failed to fetch report')
+        addToast({
+          title: 'Error',
+          description: err.response?.message,
+          color: 'danger',
+        })
       } finally {
         setLoading(false)
       }
     }
 
     fetchReport()
-  }, [])
+  }, [merchantId, selectedTimeframe])
 
   if (loading) {
-    return <div>Loading report...</div>
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    )
   }
 
   return (
     <div className="ma-w-7l mx-auto p-5">
-      <h1 className="mb-6 text-2xl font-bold">Report Dashboard</h1>
+      <div className="flex justify-between">
+        <h1 className="mb-6 text-2xl font-bold">Report Dashboard</h1>
+        <div className="mb-4 w-50">
+          <Select
+            label="Select Timeframe"
+            selectedKeys={[selectedTimeframe]}
+            onSelectionChange={keys => setSelectedTimeframe(Array.from(keys)[0] as string)}
+            className="max-w-xs"
+          >
+            <SelectItem key="1d">Last 24 Hours</SelectItem>
+            <SelectItem key="7d">Last 7 Days</SelectItem>
+            <SelectItem key="1m">Last 1 Month</SelectItem>
+          </Select>
+        </div>
+      </div>
       <div className="mb-6 grid grid-cols-2 gap-4">
         <Card>
           <CardHeader>
@@ -72,7 +93,7 @@ function ReportPage() {
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <h3 className="text-lg font-medium">Transactions per Address</h3>
+            <h3 className="text-lg font-medium">Transactions per Terminal</h3>
           </CardHeader>
           <CardBody>
             <ResponsiveContainer width="100%" height={300}>

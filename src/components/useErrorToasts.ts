@@ -9,20 +9,20 @@ const useErrorToasts = () => {
   const showErrorToasts = (errorData: ErrorData | null) => {
     if (!errorData) return
 
-    if (errorData.errors && Array.isArray(errorData.errors)) {
-      errorData.errors.forEach(error => {
-        addToast({
-          title: error.msg,
-          color: 'danger',
-        })
-      })
-    } else if (errorData.message) {
-      addToast({
-        title: errorData.message,
-        color: 'danger',
-      })
-    }
+    //   if (errorData.errors && Array.isArray(errorData.errors)) {
+    //     errorData.errors.forEach(error => {
+    //       addToast({
+    //         title: error.msg,
+    //         color: 'danger',
+    //       })
+    //     })
+    //   } else if (errorData.message) {
+    addToast({
+      title: 'error',
+      color: 'danger',
+    })
   }
+  // }
 
   return { showErrorToasts }
 }

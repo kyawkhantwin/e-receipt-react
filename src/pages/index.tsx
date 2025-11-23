@@ -26,6 +26,10 @@ function LoginPage() {
   useEffect(() => {
     if (isError) {
       showErrorToasts(errorData)
+      if (errorData.require === 'PASSWORD_UPDATE_REQUIRED') {
+        localStorage.setItem('userId', errorData.user.id as string)
+        navigate('/reset-password')
+      }
     }
   }, [isError, errorData])
 
@@ -96,7 +100,7 @@ function LoginPage() {
                 <Input
                   required
                   className="w-full rounded-lg text-base focus:ring-2 focus:outline-none"
-                  placeholder="Enter Serial number"
+                  placeholder="Enter Username"
                   value={username}
                   onChange={e => setUsername(e.target.value)}
                 />
@@ -118,7 +122,7 @@ function LoginPage() {
                   }
                   errorMessage={passwordError}
                   isInvalid={!!passwordError}
-                  placeholder="Enter 6-digit PIN"
+                  placeholder="Enter Password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={e => handlePasswordChange(e.target.value)}

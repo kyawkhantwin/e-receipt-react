@@ -8,12 +8,15 @@ import ProtectedRoute from '@/routes/ProtectedRoute.tsx'
 import ListPage from './feature/list/list'
 import ReportPage from './feature/report/report'
 
+import ResetPasswordPage from '@/feature/reset-password/ResetPasswordPage'
+
 function App() {
   return (
     <Routes>
       <Route element={<AuthRoute />}>
         <Route element={<IndexPage />} path="/" />
       </Route>
+      <Route element={<ResetPasswordPage />} path="/reset-password" />
       <Route element={<ProtectedRoute />}>
         <Route element={<ListPage />} path="/list" />
 
