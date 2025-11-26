@@ -55,7 +55,7 @@ function LoginPage() {
       if (data?.role === 'merchant') {
         navigate(`/report`)
       } else {
-        navigate('/home')kya
+        navigate('/home')
       }
     }
   }, [isSuccess, data])
