@@ -51,10 +51,11 @@ function LoginPage() {
         title: 'Login Successful',
         color: 'success',
       })
+      console.log('data?.role', data.role)
       if (data?.role === 'merchant') {
         navigate(`/report`)
       } else {
-        navigate('/home')
+        navigate('/home')kya
       }
     }
   }, [isSuccess, data])
