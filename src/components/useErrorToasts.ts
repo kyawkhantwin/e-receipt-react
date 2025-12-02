@@ -7,22 +7,23 @@ type ErrorData = {
 
 const useErrorToasts = () => {
   const showErrorToasts = (errorData: ErrorData | null) => {
+    console.log('errorData', errorData)
     if (!errorData) return
 
-    //   if (errorData.errors && Array.isArray(errorData.errors)) {
-    //     errorData.errors.forEach(error => {
-    //       addToast({
-    //         title: error.msg,
-    //         color: 'danger',
-    //       })
-    //     })
-    //   } else if (errorData.message) {
-    addToast({
-      title: 'error',
-      color: 'danger',
-    })
+    if (errorData.message) {
+      addToast({
+        title: errorData.message,
+        color: 'danger',
+      })
+    } else if (errorData.errors && Array.isArray(errorData.errors)) {
+      errorData.errors.forEach(error => {
+        addToast({
+          title: error.msg,
+          color: 'danger',
+        })
+      })
+    }
   }
-  // }
 
   return { showErrorToasts }
 }

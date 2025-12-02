@@ -18,7 +18,7 @@ function LoginPage() {
   const [passwordError, setPasswordError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const { showErrorToasts } = useErrorToasts()
-  const { trigger, isSuccess, isError, data, errorData } = useAxiosApi()
+  const { trigger, isSuccess, isError, data, errorData, isLoading } = useAxiosApi()
   const toggleVisibility = () => setShowPassword(!showPassword)
   const { addToken } = useAuthToken()
   const navigate = useNavigate()
@@ -26,6 +26,7 @@ function LoginPage() {
   useEffect(() => {
     if (isError) {
       showErrorToasts(errorData)
+
       if (errorData.require === 'PASSWORD_UPDATE_REQUIRED') {
         localStorage.setItem('userId', errorData.user.id as string)
         navigate('/reset-password')
@@ -51,7 +52,6 @@ function LoginPage() {
         title: 'Login Successful',
         color: 'success',
       })
-      console.log('data?.role', data.role)
       if (data?.role === 'merchant') {
         navigate(`/report`)
       } else {
@@ -73,7 +73,6 @@ function LoginPage() {
     e.preventDefault()
     if (!isValidPin(password)) {
       setPasswordError('Password must be at least 6 character')
-
       return
     }
     setPasswordError('')
@@ -134,6 +133,7 @@ function LoginPage() {
                   className="w-full rounded-xl py-3 text-lg font-semibold shadow-md transition-all focus:ring-2 focus:outline-none"
                   color="primary"
                   type="submit"
+                  isLoading={isLoading}
                 >
                   Login
                 </Button>

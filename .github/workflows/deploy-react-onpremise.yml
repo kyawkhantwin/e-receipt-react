@@ -1,37 +1,37 @@
-name: Build and Deploy e-receipt-react Frontend on-premise
+# name: Build and Deploy e-receipt-react Frontend on-premise
 
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
 
-jobs:
-  build_and_push:
-    runs-on: ubuntu-latest
-    outputs:
-      IMAGE_VERSION: ${{ steps.set_version.outputs.version }}
-    env:
-      IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
-    steps:
-      - uses: actions/checkout@v4
+# jobs:
+#   build_and_push:
+#     runs-on: ubuntu-latest
+#     outputs:
+#       IMAGE_VERSION: ${{ steps.set_version.outputs.version }}
+#     env:
+#       IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+#     steps:
+#       - uses: actions/checkout@v4
 
-      - name: Set IMAGE_VERSION from package.json
-        id: set_version
-        run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
+#       - name: Set IMAGE_VERSION from package.json
+#         id: set_version
+#         run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
 
-      - uses: docker/setup-buildx-action@v2
+#       - uses: docker/setup-buildx-action@v2
 
-      - uses: docker/login-action@v2
-        with:
-          registry: ${{ secrets.REGISTRY_URL }}
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+#       - uses: docker/login-action@v2
+#         with:
+#           registry: ${{ secrets.REGISTRY_URL }}
+#           username: ${{ secrets.REGISTRY_USERNAME }}
+#           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build and push React frontend image
-        run: |
-          echo "Building and pushing Docker image $IMAGE_NAME:${{ steps.set_version.outputs.version }}"
-          docker buildx build --push -t "$IMAGE_NAME:${{ steps.set_version.outputs.version }}" -f Dockerfile .
+#       - name: Build and push React frontend image
+#         run: |
+#           echo "Building and pushing Docker image $IMAGE_NAME:${{ steps.set_version.outputs.version }}"
+#           docker buildx build --push -t "$IMAGE_NAME:${{ steps.set_version.outputs.version }}" -f Dockerfile .
 
   # copy_compose_file:
   #   needs: build_and_push

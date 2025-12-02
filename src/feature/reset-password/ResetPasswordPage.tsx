@@ -10,6 +10,7 @@ import DefaultLayout from '@/layouts/default.tsx'
 import { useResetPasswordApi } from '@/api/useResetPasswordApi'
 import useErrorToasts from '@/components/useErrorToasts.ts'
 import { useAuthToken } from '@/utils/useAuthToken'
+import { EyeClosedIcon, EyeIcon } from 'lucide-react'
 
 function ResetPasswordPage() {
   const { getAuthData } = useAuthToken()
@@ -27,9 +28,11 @@ function ResetPasswordPage() {
 
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const { showErrorToasts } = useErrorToasts()
-  const { resetPassword, isSuccess, isError, errorData } = useResetPasswordApi()
+  const { resetPassword, isSuccess, isError, errorData, isLoading } = useResetPasswordApi()
 
   useEffect(() => {
     if (isError) {
@@ -72,28 +75,53 @@ function ResetPasswordPage() {
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="w-full">
                 <label className="mb-1 block text-sm font-medium">New Password</label>
-                <Input
-                  required
-                  type="password"
-                  className="w-full rounded-lg text-base focus:ring-2 focus:outline-none"
-                  placeholder="Enter your new password"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                />
+                <div className="relative">
+                  <Input
+                    required
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Enter your new password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400"
+                  >
+                    {showPassword ? (
+                      <EyeClosedIcon className="h-5 w-5" />
+                    ) : (
+                      <EyeIcon className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
               </div>
               <div className="w-full">
                 <label className="mb-1 block text-sm font-medium">Confirm New Password</label>
-                <Input
-                  required
-                  type="password"
-                  className="w-full rounded-lg text-base focus:ring-2 focus:outline-none"
-                  placeholder="Confirm your new password"
-                  value={confirmPassword}
-                  onChange={e => setConfirmPassword(e.target.value)}
-                />
+                <div className="relative">
+                  <Input
+                    required
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    placeholder="Confirm your new password"
+                    value={confirmPassword}
+                    onChange={e => setConfirmPassword(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400"
+                  >
+                    {showConfirmPassword ? (
+                      <EyeClosedIcon className="h-5 w-5" />
+                    ) : (
+                      <EyeIcon className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
               </div>
               <div>
                 <Button
+                  isLoading={isLoading}
                   className="w-full rounded-xl py-3 text-lg font-semibold shadow-md transition-all focus:ring-2 focus:outline-none"
                   color="primary"
                   type="submit"

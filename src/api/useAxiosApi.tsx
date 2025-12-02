@@ -40,7 +40,6 @@ const useAxiosApi = () => {
 
         return response.data.data
       } catch (error: any) {
-        console.log('this is error', error.response?.data || error.message || error)
         const responseErrorData = error.response?.data
 
         if (error === 'Network Error') {
