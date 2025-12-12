@@ -1,5 +1,3 @@
-import { Logo } from '@/components/icons.tsx'
-
 export const htmlStyles = {
   page: {
     width: '80mm',
@@ -35,9 +33,10 @@ export const htmlStyles = {
   },
   row: {
     display: 'flex',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
+    backgroundColor: '#f5f5f5',
     marginBottom: '1mm',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   centerRow: {
     display: 'flex',
@@ -47,25 +46,24 @@ export const htmlStyles = {
   },
   label: {
     fontWeight: 'bold',
-    fontSize: '11px',
-    whiteSpace: 'nowrap',
-    marginRight: '0.5mm',
+    fontSize: '10px',
+    whiteSpace: 'pre',
   },
-  rightValue: {
+  value: {
     flex: 1,
     fontSize: '10px',
-    textAlign: 'right',
+    // textAlign: 'right',
     wordBreak: 'break-word',
   },
   valueCenter: {
-    fontSize: '11px',
+    fontSize: '9px',
     textAlign: 'center',
     wordBreak: 'break-word',
   },
-  value: {
-    fontSize: '10px',
-    wordBreak: 'break-word',
-  },
+  // value: {
+  //   fontSize: '10px',
+  //   wordBreak: 'break-word',
+  // },
   rowSection: {
     marginBottom: '1mm',
     justifyContent: 'space-between',
@@ -79,11 +77,12 @@ export const htmlStyles = {
   amountLabel: {
     fontWeight: 'bold',
     fontSize: '13px',
+    marginRight: '2mm',
   },
   amountValue: {
     flex: 1,
     fontSize: '13px',
-    textAlign: 'right',
+    // textAlign: 'right',
     wordBreak: 'break-word',
     fontWeight: 'bold',
   },
@@ -121,7 +120,12 @@ export const SlipHeader = ({
 }) => (
   <>
     <div style={htmlStyles.logo}>
-      <Logo width={40} />
+      <img
+        alt="kbz logo"
+        width={180}
+        // src={'https://www.kbzbank.com/wp-content/uploads/2018/11/logo1.png'}
+        src={'/kbz_logo.jpg'}
+      />
     </div>
     <div style={htmlStyles.merchantName}>{merchantName}</div>
     <div style={htmlStyles.merchantAddress}>{merchantAddress}</div>
@@ -130,10 +134,10 @@ export const SlipHeader = ({
 
 export const renderRow = (label: string, value?: string, center = false, childbold = false) => (
   <div style={center ? htmlStyles.centerRow : htmlStyles.row}>
-    <span style={htmlStyles.label}>{label}</span>
+    <pre style={htmlStyles.label}>{label}</pre>
     <span
       style={{
-        ...(center ? htmlStyles.valueCenter : htmlStyles.rightValue),
+        ...(center ? htmlStyles.valueCenter : htmlStyles.value),
         fontWeight: childbold ? 'bold' : 'normal',
       }}
     >

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Select, SelectItem } from '@heroui/select'
 const sortOptions = [
-  { key: 'desc', label: 'Newest' },
-  { key: 'asc', label: 'Oldest' },
-  { key: 'rid', label: 'RID' },
+  { key: '1d', label: '1 Day' },
+  { key: '1w', label: '1 Week' },
+  { key: '1m', label: '1 Month' },
 ]
 
 interface TransactionSortByProps {
@@ -21,9 +21,7 @@ const TransactionSortBy: React.FC<TransactionSortByProps> = ({ onChange, sort })
         aria-label="Select sort order"
       >
         {sortOptions.map(option => (
-          <SelectItem key={option.key}>
-            {option.label}
-          </SelectItem>
+          <SelectItem key={option.key}>{option.label}</SelectItem>
         ))}
       </Select>
     </div>

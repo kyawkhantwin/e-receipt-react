@@ -9,12 +9,11 @@ export const Logo: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({
   ...props
 }) => (
   <img
-  {...props}
-
-    alt="uts logo"
+    {...props}
+    alt="kbz logo"
     height={height ?? width}
     // src={'https://www.kbzbank.com/wp-content/uploads/2018/11/logo1.png'}
-    src={'/uts_logo.png'}
+    src={'/kbz_logo.png'}
     width={width}
   />
 )

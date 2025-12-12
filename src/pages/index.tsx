@@ -10,14 +10,12 @@ import DefaultLayout from '@/layouts/default.tsx'
 import { useAuthToken } from '@/utils/useAuthToken.tsx'
 import useAxiosApi from '@/api/useAxiosApi'
 import { ApiConfig } from '@/config/apiConfig.ts'
-import useErrorToasts from '@/components/useErrorToasts.ts'
 
 function LoginPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const { showErrorToasts } = useErrorToasts()
   const { trigger, isSuccess, isError, data, errorData, isLoading } = useAxiosApi()
   const toggleVisibility = () => setShowPassword(!showPassword)
   const { addToken } = useAuthToken()
@@ -25,14 +23,21 @@ function LoginPage() {
 
   useEffect(() => {
     if (isError) {
-      showErrorToasts(errorData)
-
-      if (errorData.require === 'PASSWORD_UPDATE_REQUIRED') {
+      if (errorData?.require && errorData?.require === 'PASSWORD_UPDATE_REQUIRED') {
         localStorage.setItem('userId', errorData.user.id as string)
+        addToast({
+          title: 'Password update required',
+          color: 'danger',
+        })
         navigate('/reset-password')
+      } else if (errorData?.message) {
+        addToast({
+          title: errorData.message || 'Login Failed',
+          color: 'danger',
+        })
       }
     }
-  }, [isError, errorData])
+  }, [isError])
 
   useEffect(() => {
     if (isSuccess) {

@@ -9,14 +9,26 @@ axiosClient.interceptors.request.use(
   function (config) {
     const token = localStorage.getItem('token')
     config.headers['x-api-key'] = import.meta.env.VITE_API_KEY
-
+    console.log('token', token)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
+      console.log('Frontend Authorization Header:', config.headers.Authorization)
     }
 
     return config
   },
   function (error) {
+    return Promise.reject(error)
+  }
+)
+
+axiosClient.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('token')
+      window.location.href = '/'
+    }
     return Promise.reject(error)
   }
 )

@@ -32,71 +32,88 @@ const TransactionSlip: React.FC<Props> = ({ transaction, contentRef, copyFor }) 
         merchantAddress={authData.merchantAddress!}
       />
       <div className="flex items-center justify-between" style={{ marginBottom: '1mm' }}>
-        {renderRow('Date:', date.date)}
-        {renderRow('Time:', date.time)}
+        {renderRow('DATE     :', date.date)}
+        {renderRow('TIME:', date.time)}
       </div>
-      {renderRow('TID:', transaction.DE41)}
-      {renderRow('MID:', transaction.DE42)}
-      {renderRow('Batch Number:', transaction.batch_number)}
-      {renderRow('Invoice Number:', transaction.invoice_number)}
+      <div className="flex items-center justify-between" style={{ marginBottom: '1mm' }}>
+        {renderRow('TRACE NO :', transaction.DE11)}
+        {renderRow('INV NO:', transaction.invoice_number)}
+      </div>
+      {renderRow('TID      :', transaction.DE41)}
+      {renderRow('MID      :', transaction.DE42)}
       <div style={htmlStyles.title}>{title}</div>
-      <p style={{ fontWeight: 'bold', fontSize: '13px', marginBottom: '1.5mm' }}>
-        {transaction.card_label || 'QR'}
-      </p>
-      <div style={htmlStyles.rowSection}>
-        <div style={{ marginBottom: '0.3mm' }}>
-          <span
-            style={{
-              fontWeight: 'bold',
-            }}
-          >
-            {transaction.DE2 || 'N/A'}
-          </span>
-        </div>
-        <div style={{ marginBottom: '0.3mm' }}>
-          <span
-            style={{
-              fontSize: '12px',
-              textAlign: 'right',
-              wordBreak: 'break-word',
-              fontWeight: 'bold',
-            }}
-          >
-            **/**
-          </span>
-        </div>
-        <div style={{ marginBottom: '1.5mm' }}>
-          <span
-            style={{
-              fontSize: '12px',
-              textAlign: 'right',
-              wordBreak: 'break-word',
-              fontWeight: 'bold',
-            }}
-          >
-            {entryMode}
-          </span>
-        </div>
-        {!isError && renderRow('RRN:', transaction.DE37)}
-        {!isError && renderRow('Approval Code:', transaction.DE38)}
-      </div>
+      {transaction.DE3 !== 'QR' && transaction.DE3 !== 'QRV' && (
+        <>
+          <p style={{ fontWeight: 'bold', fontSize: '13px', marginBottom: '1.5mm' }}>
+            {transaction.card_label}
+          </p>
+
+          <div style={htmlStyles.rowSection}>
+            <div style={{ marginBottom: '0.3mm' }}>
+              <span
+                style={{
+                  fontWeight: 'bold',
+                }}
+              >
+                {transaction.DE2 || 'N/A'}
+              </span>
+            </div>
+            <div style={{ marginBottom: '0.3mm' }}>
+              <span
+                style={{
+                  fontSize: '12px',
+                  textAlign: 'right',
+                  wordBreak: 'break-word',
+                  fontWeight: 'bold',
+                }}
+              >
+                **/**
+              </span>
+            </div>
+            <div style={{ marginBottom: '1.5mm' }}>
+              <span
+                style={{
+                  fontSize: '12px',
+                  textAlign: 'right',
+                  wordBreak: 'break-word',
+                  fontWeight: 'bold',
+                }}
+              >
+                {entryMode}
+              </span>
+            </div>
+          </div>
+        </>
+      )}
+
+      {!isError && renderRow('TRXN REF : ', transaction.DE37)}
+      {!isError && renderRow('TRNX ID  : ', transaction.DE38)}
+
+      {!isError && renderRow('STATUS   : ', transaction.DE39 === 'A' ? 'SUCCESS' : 'DECLINED')}
       {isError ? (
         <div className={'mt-[5mm]'}>
           {renderRow('RESP Code:', declineCode, true, true)}
           {declineReason && <p style={htmlStyles.valueCenter}>[{declineReason}]</p>}
         </div>
       ) : (
-        <div style={htmlStyles.amountSection}>
-          <div style={{ ...htmlStyles.row, margin: '2mm 0' }}>
-            <span style={htmlStyles.amountLabel}>Amount:</span>
+        <div style={(htmlStyles.amountSection, htmlStyles.centerRow)}>
+          <div style={{ margin: '2mm 0' }}>
+            <span style={htmlStyles.amountLabel}>TOTAL {transaction.DE49 || ''}</span>
             <span style={htmlStyles.amountValue}>
-              {transaction.DE4 ? `${transaction.DE4} ${transaction.DE49 || ''} ` : 'N/A'}
+              {transaction.DE4 ? `${transaction.DE4}  ` : 'N/A'}
             </span>
           </div>
         </div>
       )}
-      <div style={isError ? htmlStyles.error : htmlStyles.generatedAt}>
-        {isError ? '**** ERROR ****' : `**** ${copyFor} COPY ****`}
+      <div className="flex flex-col gap-2">
+        <div>
+          <p style={htmlStyles.valueCenter}>I AGREE TO PAY THE ABOVE TOTAL AMOUNT </p>
+          <p style={htmlStyles.valueCenter}> ACCORDING TO THE THE ISSUER AGREEMENT</p>
+        </div>
+        <p style={htmlStyles.valueCenter}>
+          {isError ? '**** ERROR ****' : `**** ${copyFor} COPY ****`}
+        </p>
+        <p style={htmlStyles.valueCenter}>THANK YOU!</p>
       </div>
     </div>
   )

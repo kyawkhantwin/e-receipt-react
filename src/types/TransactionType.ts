@@ -73,7 +73,7 @@ export const DE3Map: Record<string, string> = {
   PC: 'Preauth Complete',
   PCV: 'Preauth Complete Void',
   ST: 'Settlement',
-  QR: 'QR Payment',
+  QR: 'QR Pay',
   QRV: 'QR Refund',
   R: 'Refund',
   CAV: 'Cash Advance',
