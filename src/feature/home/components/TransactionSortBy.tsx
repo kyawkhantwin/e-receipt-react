@@ -15,10 +15,10 @@ const TransactionSortBy: React.FC<TransactionSortByProps> = ({ onChange, sort })
   return (
     <div className="relative w-32">
       <Select
+        aria-label="Select sort order"
+        className="w-full"
         selectedKeys={[sort]}
         onSelectionChange={(keys: any) => onChange(Array.from(keys)[0] as string)}
-        className="w-full"
-        aria-label="Select sort order"
       >
         {sortOptions.map(option => (
           <SelectItem key={option.key}>{option.label}</SelectItem>

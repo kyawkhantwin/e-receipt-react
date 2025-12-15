@@ -20,7 +20,9 @@ const useApiOperation = <T, P extends any[]>(
       setError(null)
       try {
         const result = await apiCall(...args)
+
         setData(result)
+
         return result
       } catch (err: any) {
         setError(err)

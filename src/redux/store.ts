@@ -3,10 +3,12 @@ import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 
 import transactionDetailReducer from './transactionSlice'
+import merchantReducer from './merchantSlice'
 
 export const store = configureStore({
   reducer: {
     transactionDetail: transactionDetailReducer,
+    merchant: merchantReducer,
   },
 })
 

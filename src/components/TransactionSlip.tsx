@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
-import { htmlStyles, SlipHeader, renderRow } from './SlipBase'
 import { useSlipData } from '../hooks/useSlipData'
+import { htmlStyles, SlipHeader, renderRow } from './SlipBase'
 import { entryModeMap, DE3Map, TransactionType } from '@/types/TransactionType.ts'
 
 interface Props {
@@ -28,8 +28,8 @@ const TransactionSlip: React.FC<Props> = ({ transaction, contentRef, copyFor }) 
   return (
     <div ref={contentRef} className="transaction-slip p-1" style={htmlStyles.page}>
       <SlipHeader
-        merchantName={authData.merchantName!}
         merchantAddress={authData.merchantAddress!}
+        merchantName={authData.merchantName!}
       />
       <div className="flex items-center justify-between" style={{ marginBottom: '1mm' }}>
         {renderRow('DATE     :', date.date)}

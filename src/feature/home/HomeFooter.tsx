@@ -12,7 +12,7 @@ const HomeFooter: React.FC<HomeFooterProps> = ({ totalPages, setPage }) => {
   }
 
   return (
-    <footer className="bg-grey-50 flex items-center  justify-center">
+    <footer className="bg-grey-50 flex items-center justify-center">
       <Pagination
         showControls
         initialPage={1}

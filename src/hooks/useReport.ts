@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+
 import { getReport } from '@/api/reportService'
 import { CashierReportResponse, MerchantReportResponse } from '@/types/ReportTypes'
 
@@ -19,6 +20,7 @@ const useReport = (): UseReportResult => {
     setError(null)
     try {
       const response = await getReport(params)
+
       setReport(response)
     } catch (err) {
       setError(err)

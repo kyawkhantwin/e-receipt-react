@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
-import { getReport } from '../../api/reportService'
-import { useAuthToken } from '@/utils/useAuthToken'
-import LoadingSpinner from '@/components/LoadingSpinner.tsx'
 import { addToast } from '@heroui/toast'
+import { Select, SelectItem } from '@heroui/select'
+
+import { getReport } from '../../api/reportService'
+
 import TransactionCardsUI from './components/TransactionCardsUI'
 import { SummaryItem, TerminalReport } from './components/types'
 import { aggregateCombinedSummaryFromReport, deriveTerminalReports } from './components/reportUtils'
-import { Select, SelectItem } from '@heroui/select'
+
+import LoadingSpinner from '@/components/LoadingSpinner.tsx'
+import { useAuthToken } from '@/utils/useAuthToken'
 
 export default function ReportPage() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -22,11 +25,12 @@ export default function ReportPage() {
         const data = await getReport({ merchantId: merchantId!, range: selectedTimeframe })
 
         const reportList: any = data?.data?.report ?? []
-
         const combined = aggregateCombinedSummaryFromReport(reportList)
+
         setCombinedSummary(combined)
 
         const terminals = deriveTerminalReports(reportList)
+
         setTerminalReports(terminals)
       } catch (err: any) {
         addToast({
@@ -56,10 +60,10 @@ export default function ReportPage() {
         <h1 className="text-2xl font-bold">Report Dashboard</h1>
         <div className="mb-4 w-50">
           <Select
+            className="max-w-xs"
             label="Select Timeframe"
             selectedKeys={[selectedTimeframe]}
             onSelectionChange={keys => setSelectedTimeframe(Array.from(keys)[0] as string)}
-            className="max-w-xs"
           >
             <SelectItem key="1d">Last 24 Hours</SelectItem>
             <SelectItem key="7d">Last 7 Days</SelectItem>

@@ -1,9 +1,12 @@
 import { useCallback } from 'react'
+
 import useApiOperation from '../hooks/useApiOperation'
+
 import axiosClient from '@/config/axiosConfig'
 
 export interface User {
   id: number
+  email?: string
   username: string
   firstName?: string
   lastName?: string
@@ -19,7 +22,7 @@ export interface User {
   }
   role: string
   created_by: string
-  serial: string | null
+  serial?: string | null
   user_id: string
   merchant_name: string
   merchant_address: string
@@ -32,17 +35,26 @@ export interface User {
 
 export interface CreateUserDto {
   username: string
-  email: string
-  firstName: string
-  lastName: string
+  firstName?: string
+  lastName?: string
   password?: string
-  merchantId: string
+  email?: string
+  merchantId: number
   createdBy: string
-  serial: string
+  serial?: string
   role: string
-  appId: string
   merchantAddress: string
+  merchantAddress2?: string | null
   merchantName: string
+  appId: string
+}
+export interface CreateAdminUserDto {
+  username: string
+  firstName?: string
+  lastName?: string
+  password?: string
+  email?: string
+  role: string
 }
 
 export interface UpdateUserDto {
@@ -54,7 +66,7 @@ export interface UpdateUserDto {
   appId?: string
   merchantId?: string
   createdBy?: string
-  serial?: string
+  serial?: string | null
   role?: string
   merchantAddress?: string
   merchantName?: string
@@ -62,8 +74,9 @@ export interface UpdateUserDto {
 
 const useUserApi = () => {
   const createUserOp = useApiOperation(
-    useCallback(async (userData: CreateUserDto) => {
+    useCallback(async (userData: CreateUserDto | CreateAdminUserDto) => {
       const response = await axiosClient.post('/user', userData)
+
       return response.data
     }, [])
   )
@@ -71,13 +84,17 @@ const useUserApi = () => {
   const getUserOp = useApiOperation(
     useCallback(async (userId: string) => {
       const response = await axiosClient.get(`/user/${userId}`)
+
       return response.data
     }, [])
   )
 
   const getAllMerchantUsersOp = useApiOperation(
-    useCallback(async (merchantId: string) => {
-      const response = await axiosClient.get(`/user?merchantId=${merchantId}`)
+    useCallback(async (merchantId?: string) => {
+      const response = await axiosClient.get('/user', {
+        params: merchantId ? { merchantId } : undefined,
+      })
+
       return response.data
     }, [])
   )
@@ -85,6 +102,7 @@ const useUserApi = () => {
   const updateUserOp = useApiOperation(
     useCallback(async (userId: string, userData: UpdateUserDto) => {
       const response = await axiosClient.put(`/user/${userId}`, userData)
+
       return response.data
     }, [])
   )
@@ -92,6 +110,7 @@ const useUserApi = () => {
   const deleteUserOp = useApiOperation(
     useCallback(async (userId: string) => {
       const response = await axiosClient.delete(`/user/${userId}`)
+
       return response.data
     }, [])
   )

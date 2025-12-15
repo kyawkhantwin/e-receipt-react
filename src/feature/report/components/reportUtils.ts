@@ -2,12 +2,15 @@ import { SummaryItem, TerminalReport } from './types'
 
 export const aggregateCombinedSummaryFromReport = (reportList: any[]): SummaryItem[] => {
   const combined: SummaryItem[] = []
+
   reportList.forEach((item: any) => {
     const currencyReports = item.currencyReports ?? []
+
     currencyReports.forEach((r: any) => {
       combined.push(r)
     })
   })
+
   return combined
 }
 
@@ -22,6 +25,7 @@ export const deriveTerminalReports = (reportList: any[]): TerminalReport[] => {
       (acc: number, r: any) => acc + (r.totalAmount ?? 0),
       0
     )
+
     return {
       serial: item.serial ?? 'Unknown',
       totalTransactions,

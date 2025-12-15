@@ -1,5 +1,6 @@
-import { parseDE7ToDateTime } from './DateTimeFormat'
 import { formatDistanceToNow } from 'date-fns'
+
+import { parseDE7ToDateTime } from './DateTimeFormat'
 
 jest.mock('date-fns-tz', () => ({
   ...jest.requireActual('date-fns-tz'),
@@ -23,6 +24,7 @@ describe('parseDE7ToDateTime', () => {
 
   test('returns current time for invalid DE7 length', () => {
     const result = parseDE7ToDateTime('invalid')
+
     expect(result.date).toBe(`${originalYear}-01-01`)
     expect(result.time).toBe('12:00:00')
     expect(result.distanceToNow).toBe('just now')
@@ -42,6 +44,7 @@ describe('parseDE7ToDateTime', () => {
 
   test('handles invalid month', () => {
     const result = parseDE7ToDateTime('1301000000') // MM=13
+
     expect(console.warn).toHaveBeenCalledWith('Invalid DE7 format:', '1301000000')
     expect(result.distanceToNow).toBe('just now')
   })
@@ -54,6 +57,7 @@ describe('parseDE7ToDateTime', () => {
   test('handles leap year February 29', () => {
     jest.useFakeTimers().setSystemTime(new Date(2024, 1, 29))
     const result = parseDE7ToDateTime('0229000000')
+
     expect(result.date).toBe('2024-02-29')
   })
 
@@ -85,6 +89,7 @@ describe('parseDE7ToDateTime', () => {
     'parses DE7 string %s',
     ({ de7, expectedDate, expectedTime, getExpectedDistanceToNow }) => {
       const result = parseDE7ToDateTime(de7)
+
       expect(console.warn).not.toHaveBeenCalled()
       expect(result.date).toBe(expectedDate)
       expect(result.time).toBe(expectedTime)
@@ -123,4 +128,3 @@ describe('parseDE7ToDateTime', () => {
     expect(result.distanceToNow).toBe(expectedDistanceToNow)
   })
 })
-

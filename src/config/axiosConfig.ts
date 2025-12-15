@@ -8,11 +8,10 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   function (config) {
     const token = localStorage.getItem('token')
+
     config.headers['x-api-key'] = import.meta.env.VITE_API_KEY
-    console.log('token', token)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
-      console.log('Frontend Authorization Header:', config.headers.Authorization)
     }
 
     return config
@@ -29,6 +28,7 @@ axiosClient.interceptors.response.use(
       localStorage.removeItem('token')
       window.location.href = '/'
     }
+
     return Promise.reject(error)
   }
 )

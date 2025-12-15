@@ -40,7 +40,17 @@ export const useAuthToken = () => {
   }
 
   const addToken = useCallback(
-    ({ token, merchantName, merchantAddress, serial, role, merchantId, appId, receiptOn, userId }: AddTokenParams) => {
+    ({
+      token,
+      merchantName,
+      merchantAddress,
+      serial,
+      role,
+      merchantId,
+      appId,
+      receiptOn,
+      userId,
+    }: AddTokenParams) => {
       localStorage.setItem(TOKEN_KEY, token)
       localStorage.setItem(MERCHANT_NAME_KEY, merchantName)
       localStorage.setItem(MERCHANT_ADDRESS_KEY, merchantAddress)

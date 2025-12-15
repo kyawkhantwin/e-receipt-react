@@ -13,5 +13,6 @@ export const ApiConfig = {
     `/transaction?page=${page}&limit=${limit}&serial=${serial}${range ? `&range=${range}` : ''}${search ? `&search=${search}` : ''}${sort ? `&sort=${sort}` : ''}`,
   terminalList: (merchantId: string) => `/terminal/list/${merchantId}`,
   report: `/terminal/report`,
+  merchants: `/merchant`,
   resetPassword: '/auth/reset-password',
 }

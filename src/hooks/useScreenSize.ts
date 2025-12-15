@@ -13,6 +13,7 @@ export const useScreenSize = () => {
     } else if (window.innerWidth >= 1536) {
       return '2xl'
     }
+
     return ''
   }
 

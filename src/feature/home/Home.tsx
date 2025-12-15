@@ -20,7 +20,7 @@ const HomePage: React.FC = () => {
   const location = useLocation()
   const stateSerial = location.state?.serial
   const serial = stateSerial || authSerial
-
+  
   const [limit] = useState(
     screenSize === 'lg' || screenSize === 'xl' || screenSize === '2xl' ? 15 : 8
   )
@@ -53,11 +53,11 @@ const HomePage: React.FC = () => {
           handleRefresh={handleRefresh}
           handleRowClick={handleRowClick}
           loading={loading}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
           setSort={setSort}
           sort={sort}
           transactions={transactions}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
         />
         <HomeFooter setPage={setPage} totalPages={totalPages} />
       </div>

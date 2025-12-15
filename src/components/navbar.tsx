@@ -4,9 +4,10 @@ import { Button } from '@heroui/button'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { addToast } from '@heroui/toast'
 
+import { ThemeSwitch } from './theme-switch'
+
 import { useAuthToken } from '@/utils/useAuthToken.tsx'
 import { Logo } from '@/components/icons'
-import { ThemeSwitch } from './theme-switch'
 type NavLinkProps = {
   href: string
   children: React.ReactNode
@@ -20,8 +21,8 @@ const NavLink = ({ href, children, className = '', icon }: NavLinkProps) => {
 
   return (
     <Link
-      href={href}
       className={`mr-4 flex items-center rounded-md px-3 py-2 transition-all ${isActive ? 'bg-primary font-semibold text-white shadow-md' : 'text-foreground hover:bg-gray-200 hover:text-black'} ${className} `}
+      href={href}
     >
       {icon && <span className="mr-2">{icon}</span>}
       {children}
@@ -46,6 +47,7 @@ export const Navbar = () => {
   }
 
   const isMerchant = hasToken && userRole === 'merchant'
+  const isAdmin = hasToken && userRole === 'admin'
 
   return (
     <HeroUINavbar
@@ -71,6 +73,12 @@ export const Navbar = () => {
           <>
             <NavLink href="/report">Report</NavLink>
             <NavLink href="/list">List</NavLink>
+          </>
+        )}
+        {isAdmin && (
+          <>
+            <NavLink href="/merchants">Merchants</NavLink>
+            <NavLink href="/users">Users</NavLink>
           </>
         )}
         {hasToken && (

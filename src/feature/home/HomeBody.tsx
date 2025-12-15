@@ -1,12 +1,13 @@
 import React from 'react'
 import PullToRefresh from 'react-simple-pull-to-refresh'
+import { Input } from '@heroui/input'
+
+import TransactionSortBy from './components/TransactionSortBy'
 
 import LoadingSpinner from '@/components/LoadingSpinner.tsx'
 import TransactionTable from '@/feature/home/components/TransactionTable.tsx'
 import TransactionList from '@/feature/home/components/TransactionList.tsx'
 import { TransactionType } from '@/types/TransactionType.ts'
-import TransactionSortBy from './components/TransactionSortBy'
-import { Input } from '@heroui/input'
 
 interface HomeBodyProps {
   loading: boolean
@@ -43,6 +44,7 @@ const HomeBody: React.FC<HomeBodyProps> = ({
       </div>
     )
   }
+
   console.log(transactions)
 
   return (
@@ -51,14 +53,14 @@ const HomeBody: React.FC<HomeBodyProps> = ({
         <div className={'mb-1 flex items-center justify-between gap-2'}>
           <h2 className="text-medium font-semibold">Today Transactions</h2>
           <Input
-            type="search"
             aria-label="Search"
             className="w-1/2 px-4"
             placeholder="Search transaction"
+            type="search"
             value={searchTerm}
             onValueChange={setSearchTerm}
           />
-          <TransactionSortBy onChange={setSort} sort={sort} />
+          <TransactionSortBy sort={sort} onChange={setSort} />
         </div>
         <div className="mt-5">{renderContent()}</div>
       </div>

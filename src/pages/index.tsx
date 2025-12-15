@@ -59,6 +59,8 @@ function LoginPage() {
       })
       if (data?.role === 'merchant') {
         navigate(`/report`)
+      } else if (data?.role === 'admin') {
+        navigate('/merchants')
       } else {
         navigate('/home')
       }
@@ -137,8 +139,8 @@ function LoginPage() {
                 <Button
                   className="w-full rounded-xl py-3 text-lg font-semibold shadow-md transition-all focus:ring-2 focus:outline-none"
                   color="primary"
-                  type="submit"
                   isLoading={isLoading}
+                  type="submit"
                 >
                   Login
                 </Button>
@@ -148,7 +150,7 @@ function LoginPage() {
         </Card>
       </div>
       <div className="mb-10 flex flex-col items-center justify-center gap-3">
-        <img src="/mmqr.png" alt="mmqr" width={50} />
+        <img alt="mmqr" src="/mmqr.png" width={50} />
         <p className="text-bold text-sm">Now with MMQR</p>
       </div>
     </DefaultLayout>

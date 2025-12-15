@@ -1,23 +1,27 @@
-import React from 'react';
+import React from 'react'
 
 interface PosTerminalIconProps {
-  size?: number;
-  color?: string;
-  className?: string;
+  size?: number
+  color?: string
+  className?: string
 }
 
-const PosTerminalIcon: React.FC<PosTerminalIconProps> = ({ size = 24, color = 'currentColor', className }) => (
+const PosTerminalIcon: React.FC<PosTerminalIconProps> = ({
+  size = 24,
+  color = 'currentColor',
+  className,
+}) => (
   <svg
+    className={className}
+    fill={color}
+    height={size}
     id="pos-terminal"
     viewBox="0 0 24 24"
     width={size}
-    height={size}
-    fill={color}
-    className={className}
     xmlns="http://www.w3.org/2000/svg"
   >
     <path d="M15.5,2.25h-6c-1.517,0-2.75,1.233-2.75,2.75v10c0,1.064.614,1.978,1.5,2.435v2.565c0,.965.785,1.75,1.75,1.75h5c.965,0,1.75-.785,1.75-1.75v-2.565c.886-.457,1.5-1.371,1.5-2.435V5c0-1.517-1.233-2.75-2.75-2.75ZM9.75,20v-2.25h1v2.5h-.75c-.138,0-.25-.112-.25-.25ZM15.25,20c0,.138-.112.25-.25.25h-2.75v-2.5h3v2.25ZM16.75,15c0,.689-.561,1.25-1.25,1.25h-6c-.689,0-1.25-.561-1.25-1.25V5c0-.689.561-1.25,1.25-1.25h6c.689,0,1.25.561,1.25,1.25v10ZM14,4.75h-3c-.965,0-1.75.785-1.75,1.75v2c0,.965.785,1.75,1.75,1.75h3c.965,0,1.75-.785,1.75-1.75v-2c0-.965-.785-1.75-1.75-1.75ZM14.25,8.5c0,.138-.112.25-.25.25h-3c-.138,0-.25-.112-.25-.25v-2c0-.138.112-.25.25-.25h3c.138,0,.25.112.25.25v2ZM11.25,12.75h-1c-.414,0-.75-.336-.75-.75s.336-.75.75-.75h1c.414,0,.75.336.75.75s-.336.75-.75.75ZM15.5,12c0-.414-.336-.75-.75-.75h-1c-.414,0-.75.336-.75.75s.336.75.75.75h1c.414,0,.75-.336.75-.75ZM12,14.5c0-.414-.336-.75-.75-.75h-1c-.414,0-.75.336-.75.75s.336.75.75.75h1c.414,0,.75-.336.75-.75ZM15.5,14.5c0-.414-.336-.75-.75-.75h-1c-.414,0-.75.336-.75.75s.336.75.75.75h1c.414,0,.75-.336.75-.75Z" />
   </svg>
-);
+)
 
-export default PosTerminalIcon;
+export default PosTerminalIcon

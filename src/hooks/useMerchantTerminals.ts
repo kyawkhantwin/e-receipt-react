@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+
 import { getMerchantTerminals } from '@/api/reportService'
 import { TerminalData } from '@/types/TerminalTypes'
 
@@ -19,6 +20,7 @@ const useMerchantTerminals = (): UseMerchantTerminalsResult => {
     setError(null)
     try {
       const response = await getMerchantTerminals(merchantId)
+
       if (response.data && response.data.terminals) {
         setTerminals(response.data.terminals)
       }

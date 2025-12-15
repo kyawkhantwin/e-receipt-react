@@ -1,9 +1,11 @@
 import { useEffect } from 'react'
 import { Card, CardHeader, CardBody } from '@heroui/card'
 import { Spinner } from '@heroui/spinner'
+
 import useMerchantTerminals from '@/hooks/useMerchantTerminals'
 import { useAuthToken } from '@/utils/useAuthToken'
 import TerminalListItem from '@/components/TerminalListItem'
+import UserPageHeader from '../user/components/UserPageHeader'
 
 function ListPage() {
   const { terminals, loading, error, fetchTerminals } = useMerchantTerminals()
@@ -39,6 +41,8 @@ function ListPage() {
 
   return (
     <div className="p-4">
+      {/* <UserPageHeader fetchUsersData={fetchUsersData} role={'admin'} /> */}
+
       <div className="">
         <h2 className="mb-4 text-2xl font-bold">Total Terminal: {terminals?.length}</h2>
       </div>

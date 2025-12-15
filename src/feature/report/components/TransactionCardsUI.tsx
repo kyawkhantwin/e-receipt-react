@@ -34,6 +34,7 @@ function TransactionCardsUI({
   const makeSparkData = (history?: number[]) => {
     if (!history || history.length === 0)
       return Array.from({ length: 8 }).map((_, i) => ({ i, v: 0 }))
+
     return history.slice(-12).map((v, i) => ({ i, v }))
   }
 
@@ -60,9 +61,9 @@ function TransactionCardsUI({
             </CardHeader>
             <CardBody>
               <div className="w-full">
-                <ResponsiveContainer width="100%" height={20}>
+                <ResponsiveContainer height={20} width="100%">
                   <LineChart data={makeSparkData(item.history)}>
-                    <Line type="monotone" dataKey="v" dot={false} strokeWidth={2} />
+                    <Line dataKey="v" dot={false} strokeWidth={2} type="monotone" />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -75,7 +76,7 @@ function TransactionCardsUI({
         <Card>
           <CardHeader>Transactions per Terminal</CardHeader>
           <CardBody>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer height={300} width="100%">
               <BarChart data={terminalReports}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="serial" />
@@ -91,18 +92,18 @@ function TransactionCardsUI({
         <Card>
           <CardHeader>Amount Breakdown by Terminal</CardHeader>
           <CardBody>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer height={300} width="100%">
               <PieChart>
                 <Pie
+                  label
+                  cx="50%"
+                  cy="50%"
                   data={terminalReports.map(item => ({
                     name: item.serial,
                     value: item.totalAmount,
                   }))}
                   dataKey="value"
-                  cx="50%"
-                  cy="50%"
                   outerRadius={100}
-                  label
                 >
                   {terminalReports.map((_, index) => (
                     <Cell key={index} />
