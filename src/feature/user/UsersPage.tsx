@@ -8,7 +8,6 @@ import UserPageHeader from './components/UserPageHeader'
 import PageSkeleton from '@/components/skeleton/PageSkeleton'
 import AppError from '@/components/error/AppError'
 import { useParams } from 'react-router-dom'
-import { useAuthToken } from '@/utils/useAuthToken'
 
 const UsersPage: React.FC = () => {
   const { merchantId } = useParams()
@@ -19,8 +18,6 @@ const UsersPage: React.FC = () => {
     getAllMerchantUsersError,
     getAllMerchantUsersData,
   } = useUserApi()
-  const { getAuthData } = useAuthToken()
-  const { role } = getAuthData()
   const [users, setUsers] = useState<User[]>([])
 
   const fetchUsersData = useCallback(async () => {

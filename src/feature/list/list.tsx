@@ -5,7 +5,6 @@ import { Spinner } from '@heroui/spinner'
 import useMerchantTerminals from '@/hooks/useMerchantTerminals'
 import { useAuthToken } from '@/utils/useAuthToken'
 import TerminalListItem from '@/components/TerminalListItem'
-import UserPageHeader from '../user/components/UserPageHeader'
 
 function ListPage() {
   const { terminals, loading, error, fetchTerminals } = useMerchantTerminals()
