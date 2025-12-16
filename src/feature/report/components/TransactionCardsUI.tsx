@@ -109,7 +109,7 @@ function TransactionCardsUI({
                     <Cell key={index} />
                   ))}
                 </Pie>
-                <RechartsTooltip formatter={(value: number) => `$${value}`} />
+                <RechartsTooltip formatter={(value: number|undefined) => `$${value}`} />
                 <Legend />
               </PieChart>
             </ResponsiveContainer>
