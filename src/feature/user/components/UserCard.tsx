@@ -10,6 +10,7 @@ import UserDetailsDisplay from './UserDetailsDisplay'
 
 import ReusableModalInputs from '@/components/ResuableModelInputs'
 import useUserApi, { User } from '@/api/useUserApi'
+import { useAuthToken } from '@/utils/useAuthToken'
 
 interface UserCardProps {
   user: User
@@ -17,6 +18,9 @@ interface UserCardProps {
 }
 
 export const UserCard: React.FC<UserCardProps> = ({ user, onUpdated }) => {
+  const { getAuthData } = useAuthToken()
+  const { userId } = getAuthData()
+
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [editingUserId, setEditingUserId] = useState<string | null>(null)
   const [editFormData, setEditFormData] = useState<UserData>({} as UserData)
@@ -86,18 +90,20 @@ export const UserCard: React.FC<UserCardProps> = ({ user, onUpdated }) => {
         <Button size="sm" variant="ghost" onPress={() => openEditModalFor(user)}>
           Edit
         </Button>
-        <Button
-          color="danger"
-          isLoading={deleteUserLoading}
-          disabled={deleteUserLoading}
-          onPress={() => {
-            deleteUser(user.user_id!)
-            onUpdated?.()
-          }}
-          size="sm"
-        >
-          Delete
-        </Button>
+        {userId !== user.user_id && (
+          <Button
+            color="danger"
+            isLoading={deleteUserLoading}
+            disabled={deleteUserLoading}
+            onPress={() => {
+              deleteUser(user.user_id!)
+              onUpdated?.()
+            }}
+            size="sm"
+          >
+            Delete
+          </Button>
+        )}
       </CardFooter>
 
       <ReusableModalInputs<UserData>

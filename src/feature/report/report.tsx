@@ -66,7 +66,7 @@ export default function ReportPage() {
             onSelectionChange={keys => setSelectedTimeframe(Array.from(keys)[0] as string)}
           >
             <SelectItem key="1d">Last 24 Hours</SelectItem>
-            <SelectItem key="7d">Last 7 Days</SelectItem>
+            <SelectItem key="1w">Last 1 weeks</SelectItem>
             <SelectItem key="1m">Last 1 Month</SelectItem>
           </Select>
         </div>

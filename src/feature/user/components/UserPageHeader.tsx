@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import { Button } from '@heroui/button'
 
 import ReusableModalInputs from '@/components/ResuableModelInputs'
-import useUserApi, { CreateAdminUserDto, CreateUserDto } from '@/api/useUserApi'
-import { createAdminUserFields, createUserFields } from '@/feature/user/type/createUserFields'
-import { createAdminUserSchema, createUserSchema } from '@/feature/user/schema/createUserSchema'
-import { useAppSelector } from '@/redux/store'
+import useUserApi, { CreateAdminUserDto } from '@/api/useUserApi'
+import { createAdminUserFields } from '@/feature/user/type/createUserFields'
+import { createAdminUserSchema } from '@/feature/user/schema/createUserSchema'
 
 interface UserPageHeaderProps {
   fetchUsersData: () => void
