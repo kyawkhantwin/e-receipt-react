@@ -3,12 +3,11 @@ import { Card, CardHeader, CardBody, CardFooter } from '@heroui/card'
 
 import PosTerminalIcon from '@/components/icons/PosTerminalIcon'
 import { TerminalData } from '@/types/TerminalTypes'
-import { useAuthToken } from '@/utils/useAuthToken'
 
 const TerminalListItem: React.FC<
   TerminalData & { merchantName: string | null | undefined }
 > = props => {
-  return (  
+  return (
     <Link state={{ serial: props.serial }} to="/home">
       <Card className="flex w-full flex-col justify-between overflow-hidden rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-xl">
         <CardHeader className="flex flex-col items-start gap-1 p-4">
