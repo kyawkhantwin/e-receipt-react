@@ -87,7 +87,7 @@ const TransactionSlip: React.FC<Props> = ({ transaction, contentRef, copyFor }) 
       )}
 
       {!isError && renderRow('TRXN REF : ', transaction.DE37)}
-      {/* {!isError && renderRow('TRNX ID  : ', transaction.DE38)} */}
+      {!isError && renderRow('TRNX ID  : ', transaction.DE38)}
 
       {!isError && renderRow('STATUS   : ', transaction.DE39 === 'A' ? 'SUCCESS' : 'DECLINED')}
       {isError ? (
