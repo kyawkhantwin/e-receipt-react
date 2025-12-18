@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 
 import useUserApi, { User } from '../../api/useUserApi'
 
-import UserPageHeader from './components/UserPageHeader'
+import UserAdminPageHeader from './components/UserAdminPageHeader'
 
 import PageSkeleton from '@/components/skeleton/PageSkeleton'
 import AppError from '@/components/error/AppError'
@@ -52,7 +52,7 @@ const AdminUsersPage: React.FC = () => {
 
   return (
     <div className="p-4">
-      <UserPageHeader fetchUsersData={fetchUsersData} role={'admin'} />
+      <UserAdminPageHeader fetchUsersData={fetchUsersData} role={'admin'} />
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {users.map(user => (
           <div key={user.id}>

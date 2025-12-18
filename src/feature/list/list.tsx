@@ -1,15 +1,18 @@
 import { useEffect } from 'react'
 import { Card, CardHeader, CardBody } from '@heroui/card'
 import { Spinner } from '@heroui/spinner'
+import { useDispatch } from 'react-redux'
 
 import useMerchantTerminals from '@/hooks/useMerchantTerminals'
 import { useAuthToken } from '@/utils/useAuthToken'
 import TerminalListItem from '@/components/TerminalListItem'
 import { Button } from '@heroui/button'
 import { useNavigate } from 'react-router-dom'
+import { setTerminals } from '@/redux/slices/terminalSlice'
 
 function ListPage() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const { terminals, loading, error, fetchTerminals } = useMerchantTerminals()
   const { getAuthData } = useAuthToken()
@@ -30,7 +33,7 @@ function ListPage() {
   if (error) {
     return (
       <div className="flex h-[40%] items-center justify-center">
-        <Card className="w-[70%] p-4 text-red-500">
+        <Card className="w-[70%] p-4">
           <CardHeader>
             <h3 className="text-lg font-bold">Can not Fetch</h3>
           </CardHeader>
@@ -42,7 +45,9 @@ function ListPage() {
     )
   }
   const handleMangaeUser = () => {
-    navigate(`/users/${merchantId}`)
+    if (!terminals) return
+    dispatch(setTerminals(terminals as any))
+    navigate(`/merchant/users/` + merchantId)
   }
 
   return (

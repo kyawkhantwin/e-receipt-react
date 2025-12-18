@@ -11,7 +11,7 @@ interface UserPageHeaderProps {
   role: string
 }
 
-const UserPageHeader: React.FC<UserPageHeaderProps> = ({ fetchUsersData, role }) => {
+const UserAdminPageHeader: React.FC<UserPageHeaderProps> = ({ fetchUsersData, role }) => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
 
   const [createErrors, setCreateErrors] = useState<Record<string, string>>({})
@@ -61,4 +61,4 @@ const UserPageHeader: React.FC<UserPageHeaderProps> = ({ fetchUsersData, role })
   )
 }
 
-export default UserPageHeader
+export default UserAdminPageHeader

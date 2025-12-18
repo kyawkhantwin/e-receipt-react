@@ -1,5 +1,5 @@
 export interface MerchantResponseDto {
-  id: number
+  id: string
   name: string
   mobile: string
   description: string | null

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import useUserApi, { User } from '../../api/useUserApi'
 
@@ -7,10 +8,13 @@ import { UserCard } from './components/UserCard'
 import PageSkeleton from '@/components/skeleton/PageSkeleton'
 import AppError from '@/components/error/AppError'
 import { useParams } from 'react-router-dom'
-import UserPageHeader from './components/UserMerchantPageHeader'
+import UserForMerchantCreation from './components/UserForMerchantCreation'
+import { RootState } from '@/redux/store'
 
-const UsersPage: React.FC = () => {
+const MerchantPageUser: React.FC = () => {
   const { merchantId } = useParams()
+  const terminals = useSelector((state: RootState) => state.terminal.terminals)
+  const terminalSerials = terminals.map(terminal => terminal.serial)
 
   const {
     getAllMerchantUsers,
@@ -55,7 +59,11 @@ const UsersPage: React.FC = () => {
 
   return (
     <div className="p-4">
-      <UserPageHeader fetchUsersData={fetchUsersData} role={'merchant'} />
+      <UserForMerchantCreation
+        fetchUsersData={fetchUsersData}
+        role={'cashier'}
+        terminalSerials={terminalSerials}
+      />
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {users.map(user => (
           <div key={user.id}>
@@ -67,4 +75,4 @@ const UsersPage: React.FC = () => {
   )
 }
 
-export default UsersPage
+export default MerchantPageUser

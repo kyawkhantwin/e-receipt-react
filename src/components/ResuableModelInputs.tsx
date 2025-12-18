@@ -82,7 +82,7 @@ export default function ReusableModalInputs<T>({
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isDismissable={false}>
       <ModalContent className="max-h-[86vh] max-w-[90vw] overflow-y-scroll md:max-w-[55vw] lg:max-w-[35vw]">
         <ModalHeader>{title}</ModalHeader>
         <ModalBody>
@@ -122,18 +122,18 @@ export default function ReusableModalInputs<T>({
 
                 if (field.type === 'select')
                   return (
-                    <Select
-                      key={String(field.name)}
-                      isDisabled={Boolean(disabled)}
-                      label={field.label}
-                      labelPlacement="outside"
-                      selectedKeys={value ? [String(value)] : []}
-                      onSelectionChange={k => onChange({ [field.name]: [...k][0] } as Partial<T>)}
-                    >
-                      {(field.options ?? []).map(o => (
-                        <SelectItem key={o.value}>{o.label}</SelectItem>
-                      ))}
-                    </Select>
+                    <>
+                      <p>{field.label}</p>
+                      <Select
+                        key={String(field.name)}
+                        selectedKeys={value ? [String(value)] : []}
+                        onSelectionChange={k => onChange({ [field.name]: [...k][0] } as Partial<T>)}
+                      >
+                        {(field.options ?? []).map(o => (
+                          <SelectItem key={o.value}>{o.label}</SelectItem>
+                        ))}
+                      </Select>
+                    </>
                   )
 
                 return (

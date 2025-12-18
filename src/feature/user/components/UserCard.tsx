@@ -27,24 +27,24 @@ export const UserCard: React.FC<UserCardProps> = ({ user, onUpdated }) => {
   const [editErrors, setEditErrors] = useState<Record<string, string>>({})
   const { updateUser, updateUserLoading, getAllMerchantUsers, deleteUser, deleteUserLoading } =
     useUserApi()
-  function openEditModalFor(userData: UserCardProps['user']) {
-    setEditingUserId(String(userData.user_id))
-    setEditFormData({
-      username: userData.username ?? '',
-      email: userData.email ?? '',
-      firstName: userData.firstName ?? '',
-      lastName: userData.lastName ?? '',
-      enabled: Boolean(true),
-      appId: userData.app_id ?? '',
-      merchantId: userData.merchant_id ?? '',
-      createdBy: userData.created_by,
-      role: userData.role ?? '',
-      merchantAddress: userData.merchant_address,
-      merchantName: userData.merchant_name ?? '',
-    })
-    setEditErrors({})
-    setIsEditModalOpen(true)
-  }
+  // function openEditModalFor(userData: UserCardProps['user']) {
+  //   setEditingUserId(String(userData.user_id))
+  //   setEditFormData({
+  //     username: userData.username ?? '',
+  //     email: userData.email ?? '',
+  //     firstName: userData.firstName ?? '',
+  //     lastName: userData.lastName ?? '',
+  //     enabled: Boolean(true),
+  //     appId: userData.app_id ?? '',
+  //     merchantId: userData.merchant_id ?? '',
+  //     createdBy: userData.created_by,
+  //     role: userData.role ?? '',
+  //     merchantAddress: userData.merchant_address,
+  //     merchantName: userData.merchant_name ?? '',
+  //   })
+  //   setEditErrors({})
+  //   setIsEditModalOpen(true)
+  // }
 
   async function handleEditUserSubmit() {
     await updateUser(editingUserId!, editFormData)
@@ -87,9 +87,9 @@ export const UserCard: React.FC<UserCardProps> = ({ user, onUpdated }) => {
       </CardBody>
 
       <CardFooter className="flex justify-end gap-2 p-4">
-        <Button size="sm" variant="ghost" onPress={() => openEditModalFor(user)}>
+        {/* <Button size="sm" variant="ghost" onPress={() => openEditModalFor(user)}>
           Edit
-        </Button>
+        </Button> */}
         {userId !== user.user_id && (
           <Button
             color="danger"

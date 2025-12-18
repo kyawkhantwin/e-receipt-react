@@ -74,13 +74,6 @@ export const editUserFields: FieldConfig<UserData>[] = [
   {
     name: 'role',
     label: 'Role',
-  },
-  {
-    name: 'merchantAddress',
-    label: 'Merchant Address',
-  },
-  {
-    name: 'merchantName',
-    label: 'Merchant Name',
+    disabled: () => true,
   },
 ]

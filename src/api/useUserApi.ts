@@ -39,8 +39,7 @@ export interface CreateUserDto {
   lastName?: string
   password?: string
   email?: string
-  merchantId: number
-  createdBy: string
+  merchantId: string
   serial?: string
   role: string
   merchantAddress: string

@@ -14,6 +14,7 @@ import HomePage from '@/feature/home/Home.tsx'
 import IndexPage from '@/pages/index'
 import ResetPasswordPage from '@/feature/reset-password/ResetPasswordPage'
 import AdminUsersPage from './feature/user/AdminUserPage'
+import MerchantPageUser from './feature/user/MerchantPageUser'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route element={<MerchantDetailPage />} path="/merchants/:merchantId" />
         <Route element={<AdminUsersPage />} path="/users" />
         <Route element={<UsersPage />} path="/users/:merchantId" />
+        <Route element={<MerchantPageUser />} path="/merchant/users/:merchantId" />
         <Route element={<NotFoundPage />} path="*" />
       </Route>
     </Routes>

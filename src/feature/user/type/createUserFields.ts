@@ -61,3 +61,41 @@ export const createAdminUserFields: FieldConfig<CreateAdminUserDto>[] = [
     disabled: () => true,
   },
 ]
+
+export const createCashierUserFields = (
+  terminalSerials: string[]
+): FieldConfig<CreateUserDto>[] => [
+  {
+    name: 'username',
+    label: 'Username',
+  },
+  {
+    name: 'email',
+    label: 'Email',
+    type: 'email',
+  },
+  {
+    name: 'firstName',
+    label: 'First Name',
+  },
+  {
+    name: 'lastName',
+    label: 'Last Name',
+  },
+  {
+    name: 'serial',
+    label: 'Terminal Serial',
+    type: 'select',
+    options: terminalSerials.map(serial => ({ label: serial, value: serial })),
+  },
+  {
+    name: 'password',
+    label: 'Password',
+    type: 'password',
+  },
+  {
+    name: 'role',
+    label: 'Role',
+    disabled: () => true,
+  },
+]
