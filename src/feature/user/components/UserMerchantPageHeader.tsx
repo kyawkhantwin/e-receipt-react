@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Button } from '@heroui/button'
-import { AxiosError } from 'axios'
 
 import ReusableModalInputs from '@/components/ResuableModelInputs'
 import useUserApi, { CreateAdminUserDto, CreateUserDto } from '@/api/useUserApi'
@@ -37,7 +36,7 @@ const UserPageHeader: React.FC<UserPageHeaderProps> = ({ fetchUsersData, role })
   }
 
   const [createFormData, setCreateFormData] = useState<CreateUserDto>(initialCreateFormState)
-  const { createUser, createUserError } = useUserApi()
+  const { createUser } = useUserApi()
 
   async function handleCreateUserSubmit() {
     setSubmitting(true)

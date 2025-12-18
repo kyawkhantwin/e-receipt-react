@@ -34,6 +34,7 @@ export interface User {
 }
 
 export interface CreateUserDto {
+  // Added comment to trigger re-compilation
   username: string
   firstName?: string
   lastName?: string
@@ -46,6 +47,7 @@ export interface CreateUserDto {
   merchantAddress2?: string | null
   merchantName: string
   appId: string
+  createdBy: string
 }
 export interface CreateAdminUserDto {
   username: string

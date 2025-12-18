@@ -2,12 +2,9 @@ import React, { useState } from 'react'
 import { Button } from '@heroui/button'
 
 import ReusableModalInputs from '@/components/ResuableModelInputs'
-import useUserApi, { CreateAdminUserDto, CreateUserDto } from '@/api/useUserApi'
-import {
-  createAdminUserFields,
-  createCashierUserFields,
-} from '@/feature/user/type/createUserFields'
-import { createAdminUserSchema, createCashierSchema } from '@/feature/user/schema/createUserSchema'
+import useUserApi, { CreateUserDto } from '@/api/useUserApi'
+import { createCashierUserFields } from '@/feature/user/type/createUserFields'
+import { createCashierSchema } from '@/feature/user/schema/createUserSchema'
 import { addToast } from '@heroui/toast'
 import { useAuthToken } from '@/utils/useAuthToken'
 
