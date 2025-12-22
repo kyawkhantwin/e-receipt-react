@@ -39,8 +39,15 @@ const TransactionSlip: React.FC<Props> = ({ transaction, contentRef, copyFor }) 
         {renderRow('TRACE NO :', transaction.DE11)}
         {renderRow('INV NO:', transaction.invoice_number)}
       </div>
-      {renderRow('TID      :', transaction.DE41)}
-      {renderRow('MID      :', transaction.DE42)}
+      {transaction.DE3 === 'QR' || transaction.DE3 === 'QRV' ? (
+        <>
+          {renderRow('TID      :', transaction.DE41)}
+          {renderRow('MID      :', transaction.DE42)}
+        </>
+      ) : (
+        <>{renderRow('SHORT CODE      :', transaction.short_code)}</>
+      )}
+
       <div style={htmlStyles.title}>{title}</div>
       {transaction.DE3 !== 'QR' && transaction.DE3 !== 'QRV' && (
         <>
@@ -85,7 +92,8 @@ const TransactionSlip: React.FC<Props> = ({ transaction, contentRef, copyFor }) 
           </div>
         </>
       )}
-
+      
+      {!isError && renderRow('Payment Type  : ', transaction.payment_identifier)}
       {!isError && renderRow('TRXN REF : ', transaction.DE37)}
       {!isError && renderRow('TRNX ID  : ', transaction.DE38)}
 

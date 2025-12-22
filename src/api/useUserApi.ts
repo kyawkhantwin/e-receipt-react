@@ -110,7 +110,7 @@ const useUserApi = () => {
 
   const deleteUserOp = useApiOperation(
     useCallback(async (userId: string) => {
-      const response = await axiosClient.delete(`/user/${userId}`)
+      const response = await axiosClient.post(`/user/delete/${userId}`)
 
       return response.data
     }, [])

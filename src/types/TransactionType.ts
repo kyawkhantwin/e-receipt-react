@@ -37,6 +37,9 @@ export interface TransactionType {
   description: string
   batch_number: string
   invoice_number: string
+  payment_identifier: string
+  mmqr_ref?: string
+  short_code?: string
   card_label?: string
   DE63_01?: string //sale count
   DE63_02?: string //total sale amount
