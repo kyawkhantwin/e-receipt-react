@@ -1,41 +1,43 @@
 import { Link } from '@heroui/link'
 import { Navbar as HeroUINavbar, NavbarBrand, NavbarContent } from '@heroui/navbar'
 import { Button } from '@heroui/button'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { addToast } from '@heroui/toast'
 
 import { ThemeSwitch } from './theme-switch'
 
 import { useAuthToken } from '@/utils/useAuthToken.tsx'
 import { Logo } from '@/components/icons'
-type NavLinkProps = {
-  href: string
-  children: React.ReactNode
-  className?: string
-  icon?: React.ReactNode
-}
+// type NavLinkProps = {
+//   href: string
+//   children: React.ReactNode
+//   className?: string
+//   icon?: React.ReactNode
+// }
 
-const NavLink = ({ href, children, className = '', icon }: NavLinkProps) => {
-  const location = useLocation()
-  const isActive = location.pathname === href
+// const NavLink = ({ href, children, className = '', icon }: NavLinkProps) => {
+//   const location = useLocation()
+//   const isActive = location.pathname === href
 
-  return (
-    <Link
-      className={`mr-4 flex items-center rounded-md px-3 py-2 transition-all ${isActive ? 'bg-primary font-semibold text-white shadow-md' : 'text-foreground hover:bg-gray-200 hover:text-black'} ${className} `}
-      href={href}
-    >
-      {icon && <span className="mr-2">{icon}</span>}
-      {children}
-    </Link>
-  )
-}
+//   return (
+//     <Link
+//       className={`mr-4 flex items-center rounded-md px-3 py-2 transition-all ${isActive ? 'bg-primary font-semibold text-white shadow-md' : 'text-foreground hover:bg-gray-200 hover:text-black'} ${className} `}
+//       href={href}
+//     >
+//       {icon && <span className="mr-2">{icon}</span>}
+//       {children}
+//     </Link>
+//   )
+// }
 
 export const Navbar = () => {
   const { hasToken, removeToken, getAuthData } = useAuthToken()
-  const routeTo = hasToken ? '/home' : '/'
+  const { role } = getAuthData()
+  const routeTo = hasToken ? (role === 'cashier' ? '/home' : '/merchants') : '/'
+
   const navigate = useNavigate()
-  const authData = getAuthData()
-  const userRole = authData.role
+  // const authData = getAuthData()
+  // const userRole = authData.role
 
   const handleLogout = () => {
     removeToken()
@@ -46,8 +48,8 @@ export const Navbar = () => {
     navigate('/', { replace: true })
   }
 
-  const isMerchant = hasToken && userRole === 'merchant'
-  const isAdmin = hasToken && userRole === 'admin'
+  // const isMerchant = hasToken && userRole === 'merchant'
+  // const isAdmin = hasToken && userRole === 'admin'
 
   return (
     <HeroUINavbar
@@ -69,18 +71,18 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent className="hidden basis-1/5 sm:flex sm:basis-full" justify="end">
-        {isMerchant && (
+        {/* {isMerchant && (
           <>
             <NavLink href="/report">Report</NavLink>
             <NavLink href="/list">List</NavLink>
           </>
-        )}
-        {isAdmin && (
+        )} */}
+        {/* {isAdmin && (
           <>
             <NavLink href="/merchants">Merchants</NavLink>
             <NavLink href="/users">Users</NavLink>
           </>
-        )}
+        )} */}
         {hasToken && (
           <Button color={'danger'} variant={'flat'} onPress={handleLogout}>
             Logout
