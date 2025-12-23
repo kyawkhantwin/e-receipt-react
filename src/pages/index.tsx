@@ -87,8 +87,8 @@ function LoginPage() {
       endPoint: ApiConfig.auth,
       method: 'post',
       body: {
-        username: username,
-        password: password,
+        username: username.trim().toLowerCase(),
+        password: password.trim(),
       },
     })
   }
