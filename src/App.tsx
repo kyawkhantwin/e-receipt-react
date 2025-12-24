@@ -9,15 +9,17 @@ import DetailPage from '@/feature/detail/Detail.tsx'
 import HomePage from '@/feature/home/Home.tsx'
 import IndexPage from '@/pages/index'
 import ResetPasswordPage from '@/feature/reset-password/ResetPasswordPage'
-// import AdminUsersPage from './feature/user/AdminUserPage'
+import { useAuthSession } from './hooks/useAuthSession'
 
 function App() {
+  useAuthSession()
+
   return (
     <Routes>
       <Route element={<AuthRoute />}>
         <Route element={<IndexPage />} path="/" />
+        <Route element={<ResetPasswordPage />} path="/reset-password" />
       </Route>
-      <Route element={<ResetPasswordPage />} path="/reset-password" />
       <Route element={<ProtectedRoute />}>
         <Route element={<ListPage />} path="/list" />
         <Route element={<HomePage />} path="/home" />

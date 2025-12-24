@@ -5,7 +5,6 @@ import { Button } from '@heroui/button'
 import { useNavigate } from 'react-router-dom'
 import { addToast } from '@heroui/toast'
 import { Eye, EyeOff } from 'lucide-react'
-
 import DefaultLayout from '@/layouts/default.tsx'
 import { useAuthToken } from '@/utils/useAuthToken.tsx'
 import useAxiosApi from '@/api/useAxiosApi'
@@ -43,6 +42,7 @@ function LoginPage() {
     if (isSuccess) {
       addToken({
         token: data?.token,
+        refreshToken: data?.refreshToken,
         merchantName: data?.merchant_name,
         merchantAddress: data?.merchant_address,
         serial: data?.serial,
@@ -57,9 +57,7 @@ function LoginPage() {
         title: 'Login Successful',
         color: 'success',
       })
-      if (data?.role === 'merchant') {
-        navigate(`/report`)
-      } else if (data?.role === 'admin') {
+      if (data.role === 'admin') {
         navigate('/merchants')
       } else {
         navigate('/home')

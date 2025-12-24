@@ -5,12 +5,14 @@ import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import transactionDetailReducer from './transactionSlice'
 import merchantReducer from './merchantSlice'
 import terminalReducer from './slices/terminalSlice'
+import authReducer from './slices/authSlice'
 
 export const store = configureStore({
   reducer: {
     transactionDetail: transactionDetailReducer,
     merchant: merchantReducer,
     terminal: terminalReducer,
+    auth: authReducer,
   },
 })
 

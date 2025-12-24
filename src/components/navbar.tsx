@@ -3,11 +3,10 @@ import { Navbar as HeroUINavbar, NavbarBrand, NavbarContent } from '@heroui/navb
 import { Button } from '@heroui/button'
 import { useNavigate } from 'react-router-dom'
 import { addToast } from '@heroui/toast'
-
 import { ThemeSwitch } from './theme-switch'
-
 import { useAuthToken } from '@/utils/useAuthToken.tsx'
 import { Logo } from '@/components/icons'
+
 // type NavLinkProps = {
 //   href: string
 //   children: React.ReactNode
@@ -56,7 +55,7 @@ export const Navbar = () => {
       className={'border-gray-700 shadow-sm dark:border-b-1'}
       height={100}
       maxWidth="xl"
-      position="sticky"
+      position="sticky" 
     >
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand className="w-32 gap-3">
