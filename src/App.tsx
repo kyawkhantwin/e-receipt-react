@@ -18,8 +18,9 @@ function App() {
     <Routes>
       <Route element={<AuthRoute />}>
         <Route element={<IndexPage />} path="/" />
-        <Route element={<ResetPasswordPage />} path="/reset-password" />
       </Route>
+      <Route element={<ResetPasswordPage />} path="/reset-password" />
+
       <Route element={<ProtectedRoute />}>
         <Route element={<ListPage />} path="/list" />
         <Route element={<HomePage />} path="/home" />
