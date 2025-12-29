@@ -5,6 +5,7 @@ export interface MerchantResponseDto {
   description: string | null
   address: string
   address2: string | null
+  address3: string | null
   phone: string | null
   mids: string
   createdBy: string

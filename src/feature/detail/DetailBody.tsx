@@ -3,6 +3,7 @@ import React from 'react'
 import TransactionSlip from '@/components/TransactionSlip.tsx'
 import SettlementSlip from '@/components/SettlementSlip.tsx'
 import { TransactionType } from '@/types/TransactionType'
+import QRSettlementSlip from '@/components/QRSettlementSlip'
 
 interface DetailBodyProps {
   transaction: TransactionType
@@ -25,6 +26,8 @@ const DetailBody: React.FC<DetailBodyProps> = ({ transaction, selectedTab, conte
     >
       {transaction.DE3 === 'ST' ? (
         <SettlementSlip contentRef={contentRef} transaction={transaction} />
+      ) : transaction.DE3 === 'QRST' ? (
+        <QRSettlementSlip contentRef={contentRef} transaction={transaction} />
       ) : (
         <TransactionSlip
           contentRef={contentRef}

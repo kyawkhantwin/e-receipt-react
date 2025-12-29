@@ -10,6 +10,7 @@ import HomePage from '@/feature/home/Home.tsx'
 import IndexPage from '@/pages/index'
 import ResetPasswordPage from '@/feature/reset-password/ResetPasswordPage'
 import { useAuthSession } from './hooks/useAuthSession'
+import AdminProtectedRoute from './routes/AdminProtectedRoute'
 
 function App() {
   useAuthSession()
@@ -24,10 +25,14 @@ function App() {
       <Route element={<ProtectedRoute />}>
         <Route element={<ListPage />} path="/list" />
         <Route element={<HomePage />} path="/home" />
-        {/* <Route element={<ReportPage />} path="/report" /> */}
         <Route element={<DetailPage />} path="/detail" />
-        <Route element={<MerchantPage />} path="/merchants" />
-        <Route element={<MerchantDetailPage />} path="/merchants/:merchantId" />
+
+        <Route element={<AdminProtectedRoute />}>
+          <Route element={<MerchantPage />} path="/merchants" />
+          <Route element={<MerchantDetailPage />} path="/merchants/:merchantId" />
+        </Route>
+
+        {/* <Route element={<ReportPage />} path="/report" /> */}
         {/* <Route element={<AdminUsersPage />} path="/users" /> */}
         {/* <Route element={<UsersPage />} path="/users/:merchantId" /> */}
         {/* <Route element={<MerchantPageUser />} path="/merchant/users/:merchantId" /> */}

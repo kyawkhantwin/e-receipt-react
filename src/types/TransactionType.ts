@@ -20,7 +20,16 @@ export type DE22Type =
 export type DE39Type =
   | 'A' // Approved
   | 'E' // Error
-
+interface Settlement {
+  CREATED_AT: string
+  amount: string
+  date: string
+  id: number
+  status: string
+  time: string
+  tran_id: string
+  transactionId: number
+}
 export interface TransactionType {
   DE2?: string
   DE3?: string
@@ -45,6 +54,7 @@ export interface TransactionType {
   DE63_02?: string //total sale amount
   DE63_03?: string // refund count
   DE63_04?: string //refund amount
+  settlements: Settlement[]
 }
 export type HomeData = {
   transactions: TransactionType[]
@@ -77,6 +87,7 @@ export const DE3Map: Record<string, string> = {
   PCV: 'Preauth Complete Void',
   ST: 'Settlement',
   QR: 'QR Pay',
+  QRST: 'QR SETTLEMENT',
   QRV: 'QR Refund',
   R: 'Refund',
   CAV: 'Cash Advance',

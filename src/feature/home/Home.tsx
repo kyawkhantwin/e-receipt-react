@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
@@ -20,7 +20,7 @@ const HomePage: React.FC = () => {
   const location = useLocation()
   const stateSerial = location.state?.serial
   const serial = stateSerial || authSerial
-  
+
   const [limit] = useState(
     screenSize === 'lg' || screenSize === 'xl' || screenSize === '2xl' ? 15 : 8
   )
@@ -36,6 +36,10 @@ const HomePage: React.FC = () => {
     setPage,
     handleRefresh,
   } = useTransactions(limit, searchTerm, serial)
+
+  useEffect(() => {
+    console.log('transaction', transactions)
+  }, [transactions])
 
   const handleRowClick = useCallback(
     (index: number) => {

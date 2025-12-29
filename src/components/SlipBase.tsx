@@ -1,8 +1,10 @@
+import { useAppSelector } from '@/redux/store'
+
 export const htmlStyles = {
   page: {
     width: '80mm',
     fontSize: '13px',
-    fontFamily: 'Arial, Helvetica, sans-serif',
+    fontFamily: 'Fira Code SemiBold, Arial, Helvetica, sans-serif',
     boxSizing: 'border-box',
     lineHeight: 1.4,
     backgroundColor: '#fff',
@@ -25,7 +27,7 @@ export const htmlStyles = {
     marginBottom: '2mm',
   },
   title: {
-    fontSize: '15px',
+    fontSize: '13px',
     fontWeight: 'bold',
     textAlign: 'center',
     margin: '3mm',
@@ -114,23 +116,38 @@ export const htmlStyles = {
 export const SlipHeader = ({
   merchantName,
   merchantAddress,
+  merchantAddress2,
+  merchantAddress3,
 }: {
   merchantName: string
   merchantAddress: string
-}) => (
-  <>
-    <div style={htmlStyles.logo}>
-      <img
-        alt="kbz logo"
-        width={180}
-        // src={'https://www.kbzbank.com/wp-content/uploads/2018/11/logo1.png'}
-        src={'/kbz_logo.jpg'}
-      />
-    </div>
-    <div style={htmlStyles.merchantName}>{merchantName}</div>
-    <div style={htmlStyles.merchantAddress}>{merchantAddress}</div>
-  </>
-)
+  merchantAddress2?: string
+  merchantAddress3?: string
+}) => {
+  const selectedMerchant = useAppSelector(state => state.merchant.selectedMerchant)
+
+  const displayMerchantName = selectedMerchant?.name || merchantName
+  const displayMerchantAddress = selectedMerchant?.address || merchantAddress
+  const displayMerchantAddress2 = selectedMerchant?.address2 || merchantAddress2
+  const displayMerchantAddress3 = selectedMerchant?.address3 || merchantAddress3
+
+  return (
+    <>
+      <div style={htmlStyles.logo}>
+        <img
+          alt="kbz logo"
+          width={180}
+          // src={'https://www.kbzbank.com/wp-content/uploads/2018/11/logo1.png'}
+          src={'/receipt_logo.jpg'}
+        />
+      </div>
+      <div style={htmlStyles.merchantName}>{displayMerchantName}</div>
+      <div style={htmlStyles.merchantAddress}>{displayMerchantAddress}</div>
+      <div style={htmlStyles.merchantAddress}>{displayMerchantAddress2}</div>
+      <div style={htmlStyles.merchantAddress}>{displayMerchantAddress3}</div>
+    </>
+  )
+}
 
 export const renderRow = (label: string, value?: string, center = false, childbold = false) => (
   <div style={center ? htmlStyles.centerRow : htmlStyles.row}>
