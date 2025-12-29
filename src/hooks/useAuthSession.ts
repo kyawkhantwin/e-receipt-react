@@ -6,14 +6,14 @@ import { useAuthToken } from '../utils/useAuthToken'
 import { refreshToken } from '../api/authService'
 import { setAuthData } from '../redux/slices/authSlice'
 
-const REFRESH_INTERVAL = 1 * 1000
+const REFRESH_INTERVAL = 60 * 1000
 const INACTIVITY_TIMEOUT = 5 * 60 * 1000
 export const useAuthSession = () => {
   const { hasToken, removeToken, getAuthData } = useAuthToken()
   const lastActivityTime = useRef(Date.now())
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  
+
   const updateLastActivityTime = () => {
     lastActivityTime.current = Date.now()
   }

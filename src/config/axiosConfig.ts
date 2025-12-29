@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { store } from '../redux/store'
+import { clearAuthData } from '../redux/slices/authSlice'
 const url = import.meta.env.VITE_API_BASE_URL
 
 const axiosClient = axios.create({
@@ -25,7 +27,7 @@ axiosClient.interceptors.response.use(
   response => response,
   error => {
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem('token')
+      store.dispatch(clearAuthData())
       window.location.href = '/'
     }
 
