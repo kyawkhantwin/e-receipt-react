@@ -24,7 +24,6 @@ export const htmlStyles = {
   merchantAddress: {
     textAlign: 'center',
     fontSize: '11px',
-    marginBottom: '2mm',
   },
   title: {
     fontSize: '13px',
@@ -36,7 +35,6 @@ export const htmlStyles = {
   row: {
     display: 'flex',
     // justifyContent: 'space-between',
-    backgroundColor: '#f5f5f5',
     marginBottom: '1mm',
     // alignItems: 'center',
   },
@@ -48,17 +46,17 @@ export const htmlStyles = {
   },
   label: {
     fontWeight: 'bold',
-    fontSize: '10px',
+    fontSize: '11px',
     whiteSpace: 'pre',
   },
   value: {
     flex: 1,
-    fontSize: '10px',
+    fontSize: '11px',
     // textAlign: 'right',
     wordBreak: 'break-word',
   },
   valueCenter: {
-    fontSize: '9px',
+    fontSize: '10px',
     textAlign: 'center',
     wordBreak: 'break-word',
   },
@@ -73,17 +71,18 @@ export const htmlStyles = {
   amountSection: {
     marginTop: '2mm',
     paddingTop: '1mm',
-    borderTop: '1px dashed #000',
-    fontSize: '19px',
+    // borderTop: '1px dashed #000',
+    fontSize: '11px',
+    marginBottom: '3mm',
   },
   amountLabel: {
     fontWeight: 'bold',
-    fontSize: '13px',
+    fontSize: '11px',
     marginRight: '2mm',
   },
   amountValue: {
     flex: 1,
-    fontSize: '13px',
+    fontSize: '11px',
     // textAlign: 'right',
     wordBreak: 'break-word',
     fontWeight: 'bold',
@@ -121,18 +120,24 @@ export const SlipHeader = ({
 }: {
   merchantName: string
   merchantAddress: string
-  merchantAddress2?: string
-  merchantAddress3?: string
+  merchantAddress2?: string | null
+  merchantAddress3?: string | null
 }) => {
   const selectedMerchant = useAppSelector(state => state.merchant.selectedMerchant)
-
-  const displayMerchantName = selectedMerchant?.name || merchantName
-  const displayMerchantAddress = selectedMerchant?.address || merchantAddress
-  const displayMerchantAddress2 = selectedMerchant?.address2 || merchantAddress2
-  const displayMerchantAddress3 = selectedMerchant?.address3 || merchantAddress3
-
+  const selectedTerminal = useAppSelector(state => state.terminal.selectedTerminal)
+  console.log('selectedTerminal', selectedTerminal)
+  const displayMerchantAddress = selectedTerminal?.address
+    ? selectedTerminal?.address
+    : selectedMerchant?.address || merchantAddress
+  const displayMerchantAddress2 = selectedTerminal?.address
+    ? selectedTerminal?.address2
+    : selectedMerchant?.address2 || merchantAddress2
+  const displayMerchantAddress3 = selectedTerminal?.address
+    ? selectedTerminal?.address3
+    : selectedMerchant?.address3 || merchantAddress3
+  const footerStars = '*'.repeat(29)
   return (
-    <>
+    <div>
       <div style={htmlStyles.logo}>
         <img
           alt="kbz logo"
@@ -141,11 +146,28 @@ export const SlipHeader = ({
           src={'/receipt_logo.jpg'}
         />
       </div>
-      <div style={htmlStyles.merchantName}>{displayMerchantName}</div>
-      <div style={htmlStyles.merchantAddress}>{displayMerchantAddress}</div>
-      <div style={htmlStyles.merchantAddress}>{displayMerchantAddress2}</div>
-      <div style={htmlStyles.merchantAddress}>{displayMerchantAddress3}</div>
-    </>
+      <div style={htmlStyles.merchantName}>{selectedTerminal?.name}</div>
+      {displayMerchantAddress && (
+        <div style={htmlStyles.merchantAddress}>{displayMerchantAddress}</div>
+      )}
+      {displayMerchantAddress2 && (
+        <div style={htmlStyles.merchantAddress}>{displayMerchantAddress2}</div>
+      )}
+      {displayMerchantAddress3 && (
+        <div style={htmlStyles.merchantAddress}>{displayMerchantAddress3}</div>
+      )}
+      <div
+        style={{
+          textAlign: 'center',
+          fontSize: '10px',
+          letterSpacing: '1px',
+          marginTop: '1mm',
+          marginBottom: '1mm',
+        }}
+      >
+        {footerStars}
+      </div>
+    </div>
   )
 }
 
@@ -156,6 +178,7 @@ export const renderRow = (label: string, value?: string, center = false, childbo
       style={{
         ...(center ? htmlStyles.valueCenter : htmlStyles.value),
         fontWeight: childbold ? 'bold' : 'normal',
+        whiteSpace: 'pre',
       }}
     >
       {value?.trim() || 'N/A'}

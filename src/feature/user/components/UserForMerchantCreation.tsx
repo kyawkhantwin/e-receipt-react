@@ -47,7 +47,6 @@ const UserForMerchantCreation: React.FC<UserPageHeaderProps> = ({
   async function handleCreateUserSubmit() {
     setSubmitting(true)
     try {
-      console.log('createFormData', createFormData)
 
       await createUser(createFormData)
       setIsCreateModalOpen(false)

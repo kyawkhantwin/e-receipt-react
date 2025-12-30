@@ -71,9 +71,7 @@ export default function ReusableModalInputs<T>({
     const result = schema.safeParse(formData)
 
     if (!result.success) {
-      console.log('formdata', formData)
       setErrors(zodErrorsToFormErrors(result.error))
-      console.log('error', zodErrorsToFormErrors(result.error))
 
       return
     }

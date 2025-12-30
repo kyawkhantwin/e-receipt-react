@@ -1,18 +1,30 @@
-import { Link } from 'react-router-dom'
 import { Card, CardHeader, CardBody, CardFooter } from '@heroui/card'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import PosTerminalIcon from '@/components/icons/PosTerminalIcon'
 import { TerminalData } from '@/types/TerminalTypes'
+import { setSelectedTerminal } from '@/redux/slices/terminalSlice'
 
 const TerminalListItem: React.FC<
   TerminalData & { merchantName: string | null | undefined }
 > = props => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    dispatch(setSelectedTerminal(props))
+    navigate('/home', { state: { serial: props.serial } })
+  }
+
   return (
-    <Link state={{ serial: props.serial }} to="/home">
+    <div onClick={handleClick}>
       <Card className="flex w-full flex-col justify-between overflow-hidden rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-xl">
         <CardHeader className="flex flex-col items-start gap-1 p-4">
-          <h3 className="text-lg font-bold">{props.merchantName}</h3>
-          <p className="text-sm">{props.address || props.secondaryAddress || 'Not Added'}</p>
+          <h3 className="text-lg font-bold">{props.name || 'No Terminal Name'}</h3>
+          <p className="text-sm">{props.merchantName}</p>
+
+          <p className="text-sm">{props.address || props.address2 || 'Not Added'}</p>
         </CardHeader>
 
         <CardBody className="flex items-center justify-center p-4">
@@ -32,7 +44,7 @@ const TerminalListItem: React.FC<
           </div>
         </CardFooter>
       </Card>
-    </Link>
+    </div>
   )
 }
 

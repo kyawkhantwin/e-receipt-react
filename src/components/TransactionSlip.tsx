@@ -24,28 +24,28 @@ const TransactionSlip: React.FC<Props> = ({ transaction, contentRef, copyFor }) 
   if (!transaction) {
     return <div>No transaction data available</div>
   }
+  const starts = '*'.repeat(29)
 
   return (
     <div ref={contentRef} className="transaction-slip p-1" style={htmlStyles.page}>
       <SlipHeader
         merchantAddress={authData.merchantAddress!}
         merchantName={authData.merchantName!}
+        merchantAddress2={authData.merchantAddress2}
+        merchantAddress3={authData.merchantAddress3}
       />
-      <div className="flex items-center justify-between" style={{ marginBottom: '1mm' }}>
-        {renderRow('DATE     :', date.date)}
-        {renderRow('TIME:', date.time)}
-      </div>
-      <div className="flex items-center justify-between" style={{ marginBottom: '1mm' }}>
-        {renderRow('TRACE NO :', transaction.DE11)}
-        {renderRow('INV NO:', transaction.invoice_number)}
-      </div>
-      {transaction.DE3 === 'QR' || transaction.DE3 === 'QRV' ? (
+
+      {renderRow('DATE     :', date.date)}
+      {renderRow('TIME     :', date.time)}
+      {renderRow('INV NO:', transaction.invoice_number)}
+
+      {transaction.DE3 !== 'QR' && transaction.DE3 !== 'QRV' ? (
         <>
           {renderRow('TID      :', transaction.DE41)}
           {renderRow('MID      :', transaction.DE42)}
         </>
       ) : (
-        <>{renderRow('SHORT CODE      :', transaction.short_code)}</>
+        <>{renderRow('SHORT CODE:', transaction.short_code)}</>
       )}
 
       <div style={htmlStyles.title}>{title}</div>
@@ -92,7 +92,7 @@ const TransactionSlip: React.FC<Props> = ({ transaction, contentRef, copyFor }) 
           </div>
         </>
       )}
-      
+
       {!isError && renderRow('Payment Type  : ', transaction.payment_identifier)}
       {!isError && renderRow('TRXN REF : ', transaction.DE37)}
       {!isError && renderRow('TRNX ID  : ', transaction.DE38)}
@@ -104,20 +104,34 @@ const TransactionSlip: React.FC<Props> = ({ transaction, contentRef, copyFor }) 
           {declineReason && <p style={htmlStyles.valueCenter}>[{declineReason}]</p>}
         </div>
       ) : (
-        <div style={(htmlStyles.amountSection, htmlStyles.centerRow)}>
-          <div style={{ margin: '2mm 0' }}>
+        <div style={htmlStyles.amountSection}>
+          <div
+            style={{
+              textAlign: 'center',
+              fontSize: '10px',
+              letterSpacing: '1px',
+            }}
+          >
+            {starts}
+          </div>
+          <div>
             <span style={htmlStyles.amountLabel}>TOTAL {transaction.DE49 || ''}</span>
             <span style={htmlStyles.amountValue}>
               {transaction.DE4 ? `${transaction.DE4}  ` : 'N/A'}
             </span>
           </div>
+          <div
+            style={{
+              textAlign: 'center',
+              fontSize: '10px',
+              letterSpacing: '1px',
+            }}
+          >
+            {starts}
+          </div>
         </div>
       )}
       <div className="flex flex-col gap-2">
-        <div>
-          <p style={htmlStyles.valueCenter}>I AGREE TO PAY THE ABOVE TOTAL AMOUNT </p>
-          <p style={htmlStyles.valueCenter}> ACCORDING TO THE THE ISSUER AGREEMENT</p>
-        </div>
         <p style={htmlStyles.valueCenter}>
           {isError ? '**** ERROR ****' : `**** ${copyFor} COPY ****`}
         </p>

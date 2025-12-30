@@ -7,7 +7,6 @@ type ErrorData = {
 
 const useErrorToasts = () => {
   const showErrorToasts = (errorData: ErrorData | null) => {
-    console.log('errorData', errorData)
     if (!errorData) return
 
     if (errorData.message) {

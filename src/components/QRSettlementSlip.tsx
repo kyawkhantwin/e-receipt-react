@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useSlipData } from '../hooks/useSlipData'
 import { htmlStyles, SlipHeader, renderRow } from './SlipBase'
-import { entryModeMap, DE3Map, TransactionType } from '@/types/TransactionType.ts'
+import { DE3Map, TransactionType } from '@/types/TransactionType.ts'
 
 interface Props {
   transaction: TransactionType
@@ -10,16 +10,9 @@ interface Props {
 
 const QRSettlementSlip: React.FC<Props> = ({ transaction, contentRef }) => {
   const { authData, date } = useSlipData(transaction)
-  console.log('transaction', transaction)
   const isError = transaction.DE39 === 'E'
-  const [declineCode, declineReason] = useMemo(() => {
-    const [codePart, reason] = transaction.description.split('\n')
-    const match = codePart.match(/\[(\d+)\]/)
-    return [match?.[1] ?? '', reason ?? '']
-  }, [transaction.description])
 
   const title = DE3Map[transaction.DE3!]
-  const entryMode = transaction.DE22 ? entryModeMap[transaction.DE22] : 'QR'
 
   if (!transaction) {
     return <div>No transaction data available</div>
@@ -30,11 +23,16 @@ const QRSettlementSlip: React.FC<Props> = ({ transaction, contentRef }) => {
       <SlipHeader
         merchantAddress={authData.merchantAddress!}
         merchantName={authData.merchantName!}
+        merchantAddress2={authData.merchantAddress2}
+        merchantAddress3={authData.merchantAddress3}
       />
       {renderRow('DATE     :', date.date)}
       {renderRow('TIME     :', date.time)}
-      {renderRow('BTH NO   :', transaction.batch_number)}
-      {renderRow('INV NO   :', transaction.invoice_number)}
+      <div className="flex">
+        {renderRow('BTH NO   :', transaction.batch_number)}
+        <div className="ms-3">{renderRow('INV NO:', transaction.invoice_number)}</div>
+      </div>
+
       {transaction.DE3 === 'QR' || transaction.DE3 === 'QRV' ? (
         <>
           {renderRow('TID      :', transaction.DE41)}
@@ -45,18 +43,24 @@ const QRSettlementSlip: React.FC<Props> = ({ transaction, contentRef }) => {
       )}
       <div style={htmlStyles.title}>{title}</div>
       {transaction.settlements.map(settlement => (
-        <React.Fragment key={settlement.id}>
+        <div style={{ marginBottom: '6mm' }} key={settlement.id}>
           {renderRow('Trans Id:', settlement.tran_id.toString())}
           {renderRow('Status     :', settlement.status)}
           {renderRow('DATE       :', settlement.date)}
           {renderRow('TIME       :', settlement.time)}
           {/* {renderRow('TRAN ID    :', settlement.tran_id)} */}
-          {renderRow('AMOUNT     :', settlement.amount)}
-        </React.Fragment>
+          {renderRow('AMOUNT     :', transaction.DE49 + ' ' + settlement.amount)}
+        </div>
       ))}
 
-      {renderRow('Refund Total     :', transaction.DE63_04)}
-      {renderRow('Sale Total     :', transaction.DE63_02)}
+      <hr className="my-2" />
+      {renderRow('Refund Total:', transaction.DE49 + '        ' + transaction.DE63_04)}
+
+      <hr className="my-2" />
+
+      {renderRow('Sale Total:', transaction.DE49 + '      ' + transaction.DE63_02)}
+
+      <hr className="my-2" />
 
       <div className="flex flex-col gap-2">
         <p style={htmlStyles.valueCenter}>

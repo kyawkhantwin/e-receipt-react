@@ -5,6 +5,8 @@ interface AuthState {
   refreshToken: string | null
   merchantName: string | null
   merchantAddress: string | null
+  merchantAddress2: string | null | undefined
+  merchantAddress3: string | null | undefined
   serial: string | null
   role: string | null
   merchantId: string | null
@@ -18,6 +20,8 @@ const initialState: AuthState = {
   refreshToken: localStorage.getItem('refreshToken'),
   merchantName: localStorage.getItem('merchantName'),
   merchantAddress: localStorage.getItem('merchantAddress'),
+  merchantAddress2: localStorage.getItem('merchantAddress2'),
+  merchantAddress3: localStorage.getItem('merchantAddress3'),
   serial: localStorage.getItem('serial'),
   role: localStorage.getItem('role'),
   merchantId: localStorage.getItem('merchantId'),
@@ -35,6 +39,8 @@ const authSlice = createSlice({
       state.refreshToken = action.payload.refreshToken
       state.merchantName = action.payload.merchantName
       state.merchantAddress = action.payload.merchantAddress
+      state.merchantAddress2 = action.payload.merchantAddress2
+      state.merchantAddress3 = action.payload.merchantAddress3
       state.serial = action.payload.serial
       state.role = action.payload.role
       state.merchantId = action.payload.merchantId
@@ -62,6 +68,16 @@ const authSlice = createSlice({
         localStorage.setItem('merchantAddress', action.payload.merchantAddress)
       } else {
         localStorage.removeItem('merchantAddress')
+      }
+      if (action.payload.merchantAddress2) {
+        localStorage.setItem('merchantAddress2', action.payload.merchantAddress2)
+      } else {
+        localStorage.removeItem('merchantAddress2')
+      }
+      if (action.payload.merchantAddress3) {
+        localStorage.setItem('merchantAddress3', action.payload.merchantAddress3)
+      } else {
+        localStorage.removeItem('merchantAddress3')
       }
       if (action.payload.serial) {
         localStorage.setItem('serial', action.payload.serial)
@@ -105,12 +121,16 @@ const authSlice = createSlice({
       state.appId = null
       state.receiptOn = null
       state.userId = null
+      state.merchantAddress2 = null
+      state.merchantAddress3 = null
 
       // Clear localStorage
       localStorage.removeItem('token')
       localStorage.removeItem('refreshToken')
       localStorage.removeItem('merchantName')
       localStorage.removeItem('merchantAddress')
+      localStorage.removeItem('merchantAddress2')
+      localStorage.removeItem('merchantAddress3')
       localStorage.removeItem('serial')
       localStorage.removeItem('role')
       localStorage.removeItem('merchantId')

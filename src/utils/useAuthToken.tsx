@@ -13,6 +13,8 @@ export const useAuthToken = () => {
     refreshToken: string
     merchantName: string
     merchantAddress: string
+    merchantAddress2?: string
+    merchantAddress3?: string
     serial: string
     role: string
     merchantId: string
@@ -27,6 +29,8 @@ export const useAuthToken = () => {
       refreshToken,
       merchantName,
       merchantAddress,
+      merchantAddress2,
+      merchantAddress3,
       serial,
       role,
       merchantId,
@@ -40,6 +44,8 @@ export const useAuthToken = () => {
           refreshToken,
           merchantName,
           merchantAddress,
+          merchantAddress2,
+          merchantAddress3,
           serial,
           role,
           merchantId,
@@ -62,6 +68,8 @@ export const useAuthToken = () => {
       refreshToken: authState.refreshToken,
       merchantName: authState.merchantName,
       merchantAddress: authState.merchantAddress,
+      merchantAddress2: authState.merchantAddress2,
+      merchantAddress3: authState.merchantAddress3,
       serial: authState.serial,
       role: authState.role,
       merchantId: authState.merchantId,

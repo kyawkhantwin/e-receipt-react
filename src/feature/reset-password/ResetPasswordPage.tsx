@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Card, CardHeader, CardBody } from '@heroui/card'
 import { Input } from '@heroui/input'
 import { Button } from '@heroui/button'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { addToast } from '@heroui/toast'
 import { EyeClosedIcon, EyeIcon } from 'lucide-react'
 
@@ -12,19 +12,24 @@ import useErrorToasts from '@/components/useErrorToasts.ts'
 import { useAuthToken } from '@/utils/useAuthToken'
 
 function ResetPasswordPage() {
-  const { getAuthData } = useAuthToken()
-  const { userId } = getAuthData()
   const navigate = useNavigate()
+  const location = useLocation()
+  const { userId: stateUserId } = (location.state || {}) as { userId: string | undefined }
 
-  if (!userId) {
-    addToast({
-      title: 'Missing requirement ',
-      color: 'success',
-    })
-    navigate('/login')
+  const { getAuthData } = useAuthToken()
+  const { userId: authUserId } = getAuthData()
 
-    return
-  }
+  const userId = stateUserId || authUserId
+
+  useEffect(() => {
+    if (!userId) {
+      addToast({
+        title: 'Missing requirement ',
+        color: 'success',
+      })
+      navigate('/login')
+    }
+  }, [userId, navigate])
 
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -59,6 +64,14 @@ function ResetPasswordPage() {
         color: 'danger',
       })
 
+      return
+    }
+
+    if (!userId) {
+      addToast({
+        title: 'Missing user ID',
+        color: 'danger',
+      })
       return
     }
 

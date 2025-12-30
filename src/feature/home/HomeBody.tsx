@@ -45,8 +45,6 @@ const HomeBody: React.FC<HomeBodyProps> = ({
     )
   }
 
-  console.log(transactions)
-
   return (
     <PullToRefresh className="mb-1 block w-full" pullDownThreshold={60} onRefresh={handleRefresh}>
       <div className={'h-[79vh]'}>

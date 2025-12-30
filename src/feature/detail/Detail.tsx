@@ -27,7 +27,9 @@ const DetailPage: React.FC = () => {
     <div className="flex h-full min-h-[85vh] w-full flex-col items-center justify-center">
       <div>
         <div className="flex flex-col items-end justify-center">
-          {transaction.DE3 !== 'ST' && <DetailHeader onSelectionChange={setSelectedTab} />}
+          {transaction.DE3 !== 'ST' && transaction.DE3 !== 'QRST' && (
+            <DetailHeader onSelectionChange={setSelectedTab} />
+          )}
           <DetailBody contentRef={contentRef} selectedTab={selectedTab} transaction={transaction} />
         </div>
         <DetailFooter contentRef={contentRef} selectedTab={selectedTab} transaction={transaction} />

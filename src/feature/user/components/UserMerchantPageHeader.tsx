@@ -41,8 +41,6 @@ const UserPageHeader: React.FC<UserPageHeaderProps> = ({ fetchUsersData, role })
   async function handleCreateUserSubmit() {
     setSubmitting(true)
     try {
-      console.log('createFormData', createFormData)
-
       await createUser(createFormData)
       setIsCreateModalOpen(false)
       setCreateFormData(initialCreateFormState)

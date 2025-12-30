@@ -37,10 +37,6 @@ const HomePage: React.FC = () => {
     handleRefresh,
   } = useTransactions(limit, searchTerm, serial)
 
-  useEffect(() => {
-    console.log('transaction', transactions)
-  }, [transactions])
-
   const handleRowClick = useCallback(
     (index: number) => {
       if (refreshing || loading || !data) return

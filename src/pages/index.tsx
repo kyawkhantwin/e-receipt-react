@@ -23,12 +23,13 @@ function LoginPage() {
   useEffect(() => {
     if (isError) {
       if (errorData?.require && errorData?.require === 'PASSWORD_UPDATE_REQUIRED') {
+        console.log('errorData', errorData)
         localStorage.setItem('userId', errorData.user.id as string)
         addToast({
           title: 'Password update required',
           color: 'danger',
         })
-        navigate('/reset-password')
+        navigate('/reset-password', { state: { userId: errorData.user.id } })
       } else if (errorData?.message) {
         addToast({
           title: errorData.message || 'Login Failed',
@@ -40,11 +41,14 @@ function LoginPage() {
 
   useEffect(() => {
     if (isSuccess) {
+      console.log('daat login', data)
       addToken({
         token: data?.token,
         refreshToken: data?.refreshToken,
         merchantName: data?.merchant_name,
         merchantAddress: data?.merchant_address,
+        merchantAddress2: data?.merchant_address2,
+        merchantAddress3: data?.merchant_address3,
         serial: data?.serial,
         role: data?.role,
         merchantId: data?.merchant_id,
