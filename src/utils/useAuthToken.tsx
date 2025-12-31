@@ -21,6 +21,7 @@ export const useAuthToken = () => {
     appId: string
     receiptOn: string
     userId: string
+    terminalName?: string
   }
 
   const addToken = useCallback(
@@ -37,6 +38,7 @@ export const useAuthToken = () => {
       appId,
       receiptOn,
       userId,
+      terminalName,
     }: AddTokenParams) => {
       dispatch(
         setAuthData({
@@ -52,6 +54,7 @@ export const useAuthToken = () => {
           appId,
           receiptOn,
           userId,
+          terminalName,
         })
       )
     },
@@ -76,6 +79,7 @@ export const useAuthToken = () => {
       appId: authState.appId,
       receiptOn: authState.receiptOn,
       userId: authState.userId,
+      terminalName: authState.terminalName,
     }
   }, [authState])
 

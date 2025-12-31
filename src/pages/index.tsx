@@ -41,7 +41,6 @@ function LoginPage() {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log('daat login', data)
       addToken({
         token: data?.token,
         refreshToken: data?.refreshToken,
@@ -49,6 +48,7 @@ function LoginPage() {
         merchantAddress: data?.merchant_address,
         merchantAddress2: data?.merchant_address2,
         merchantAddress3: data?.merchant_address3,
+        terminalName: data?.terminal_name,
         serial: data?.serial,
         role: data?.role,
         merchantId: data?.merchant_id,

@@ -13,6 +13,7 @@ interface AuthState {
   appId: string | null
   receiptOn: string | null
   userId: string | null
+  terminalName: string | null | undefined
 }
 
 const initialState: AuthState = {
@@ -28,6 +29,7 @@ const initialState: AuthState = {
   appId: localStorage.getItem('appId'),
   receiptOn: localStorage.getItem('receiptOn'),
   userId: localStorage.getItem('userId'),
+  terminalName: localStorage.getItem('terminalName'),
 }
 
 const authSlice = createSlice({
@@ -47,6 +49,7 @@ const authSlice = createSlice({
       state.appId = action.payload.appId
       state.receiptOn = action.payload.receiptOn
       state.userId = action.payload.userId
+      state.terminalName = action.payload.terminalName
 
       // Update localStorage
       if (action.payload.token) {
@@ -109,6 +112,11 @@ const authSlice = createSlice({
       } else {
         localStorage.removeItem('userId')
       }
+      if (action.payload.terminalName) {
+        localStorage.setItem('terminalName', action.payload.terminalName)
+      } else {
+        localStorage.removeItem('terminalName')
+      }
     },
     clearAuthData: state => {
       state.token = null
@@ -123,6 +131,7 @@ const authSlice = createSlice({
       state.userId = null
       state.merchantAddress2 = null
       state.merchantAddress3 = null
+      state.terminalName = null
 
       // Clear localStorage
       localStorage.removeItem('token')
@@ -136,6 +145,7 @@ const authSlice = createSlice({
       localStorage.removeItem('merchantId')
       localStorage.removeItem('appId')
       localStorage.removeItem('receiptOn')
+      localStorage.removeItem('terminalName')
       localStorage.removeItem('userId')
     },
   },

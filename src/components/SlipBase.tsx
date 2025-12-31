@@ -1,4 +1,5 @@
 import { useAppSelector } from '@/redux/store'
+import { useAuthToken } from '@/utils/useAuthToken'
 
 export const htmlStyles = {
   page: {
@@ -123,9 +124,10 @@ export const SlipHeader = ({
   merchantAddress2?: string | null
   merchantAddress3?: string | null
 }) => {
+  const { getAuthData } = useAuthToken()
+  const { terminalName } = getAuthData()
   const selectedMerchant = useAppSelector(state => state.merchant.selectedMerchant)
   const selectedTerminal = useAppSelector(state => state.terminal.selectedTerminal)
-  console.log('selectedTerminal', selectedTerminal)
   const displayMerchantAddress = selectedTerminal?.address
     ? selectedTerminal?.address
     : selectedMerchant?.address || merchantAddress
@@ -146,7 +148,7 @@ export const SlipHeader = ({
           src={'/receipt_logo.jpg'}
         />
       </div>
-      <div style={htmlStyles.merchantName}>{selectedTerminal?.name}</div>
+      <div style={htmlStyles.merchantName}>{selectedTerminal?.name || terminalName}</div>
       {displayMerchantAddress && (
         <div style={htmlStyles.merchantAddress}>{displayMerchantAddress}</div>
       )}
